@@ -1,0 +1,57 @@
+.addButton{
+
+    margin-left: 30%;
+    margin-top: 1%;
+    font-size: 18px;
+    padding: 5px;
+}
+
+.DateInput{
+    padding: 0px;
+    margin-left: 12px;
+    font: 400 13.3333px Arial;
+    width: 100px;
+}
+.DateRangePicker{
+    margin-left: 12px;
+}
+
+@media screen and (max-width: 960px) {
+        
+    .create__table, .create__thead, .create__tbody, .create__th, .create__td, .create__tr, .addButton, .edit__td {
+			display: block;
+        }
+        /* Hide table headers (but not display: none;, for accessibility) */
+		.create__thead .create__tr {
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+        }
+        
+        .create__tr {
+            margin: 0 0 1rem 0;
+          }
+        
+        .create__td, .edit__td {
+			/* Behave  like a "row" */
+			position: relative;
+			padding-left: 40%;
+        }
+        
+        .create__td:before, .edit__td:before {
+			position: absolute;
+			top: 0;
+			left: 6px;
+        }
+        
+        .create__td:nth-of-type(1):before { content: "Name"; margin-left: 8%; }
+        .create__td:nth-of-type(2):before { content: "Amount"; margin-left: 8%; }
+        .create__td:nth-of-type(3):before { content: "Description"; margin-left: 8%; }
+        .create__td:nth-of-type(4):before { content: "Mobile Number"; margin-left: 8%; }
+        .create__td:nth-of-type(5):before { content: "Date"; margin-left: 8%; }
+        .edit__td:nth-of-type(6):before {content: "Paid Status"; margin-left: 8%;}
+
+        .addButton{
+            font-size: 15px;
+        }
+    }

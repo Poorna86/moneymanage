@@ -1,0 +1,30 @@
+.header{
+    padding: 15px;
+}
+
+.header-is-active{
+    margin: 15px 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #000000;
+    font-size: 20px;
+}
+
+.title {
+    margin-left: 30%;
+}
+
+.header-is-active:hover{
+    color: #008B8B;
+}
+
+@media screen and (max-width: 960px) {
+    .header-is-active{
+        margin: 5px 5px;
+        font-size: 16px;
+    }
+    .title{
+        margin-left: 25%;
+        font-size: 18px;
+    }
+}
