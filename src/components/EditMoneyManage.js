@@ -1,5 +1,4 @@
 import React from 'react';
-import NavBarPage from './Navbar/NavBarPage';
 import ExpenseForm from './ExpenseForm';
 import { connect } from 'react-redux';
 import Header from './header';
@@ -14,7 +13,6 @@ export class EditMoneyManage extends React.Component {
     render() {
         return (
             <div>
-                <NavBarPage />
                 <Header />
                 <h2 className='title' >Money Managment summary</h2>
                 <ExpenseForm 

@@ -3,7 +3,8 @@ import moment from 'moment';
 //filter reducer
 
 const filtersReducersDefaultState = {
-    name: '',
+    name1: '',
+    name2: '',
     paidStatus: '',
     sortBy: 'date',
     startDate: moment().startOf('month'),
@@ -12,11 +13,16 @@ const filtersReducersDefaultState = {
 
 const filterReducer = (state = filtersReducersDefaultState, action) => {
     switch (action.type) {
-        case 'SET_NAME_FILTER':
+        case 'SET_NAME1_FILTER':
             return {
                 ...state,
-                name: action.name
+                name1: action.name1
             }
+        case 'SET_NAME2_FILTER':
+            return {
+                ...state,
+                name2: action.name2
+            }    
         case 'SET_PAID_FILTER':
             return {
                 ...state,

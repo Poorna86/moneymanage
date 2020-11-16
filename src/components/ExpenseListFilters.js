@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { DateRangePicker } from 'react-dates';
 import Header from './header';
-import { setNameFilter, setPaidFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
+import { setName1Filter, setName2Filter, setPaidFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
 
 export class ExpenseListFilters extends React.Component {
   state = {
@@ -12,16 +12,26 @@ export class ExpenseListFilters extends React.Component {
     this.props.setStartDate(startDate);
     this.props.setEndDate(endDate);
   };
+
   onFocusChange = (calendarFocused) => {
     this.setState(() => ({ calendarFocused }));
   }
-  onNameChange = (e) => {
-    this.props.setNameFilter(e.target.value);
+
+  onName1Change = (e) => {
+    const name1 = e.target.value
+    this.props.setName1Filter(name1);
   };
 
-  onPaidStatusChange = (e) => {
-    if (e.target.value === 'paid') {
-      this.props.setPaidFilter(e.target.value);
+  onName2Change = (e) => {
+    const name2 = e.target.value
+    this.props.setName2Filter(name2);
+  };
+
+  onPaidStatuschecked = (e) => {
+    if (e.target.checked === true) {
+      this.props.setPaidFilter('paid');
+    } else {
+      this.props.setPaidFilter('');
     }
   }
 
@@ -39,22 +49,29 @@ export class ExpenseListFilters extends React.Component {
         <h2 className='title' >Money Managment summary</h2>
         <form className='filters'>
             <input
-            className='filter__items'
+            className="filter__items mobile__view-input"
             type="text"
-            value={this.props.filters.name}
-            placeholder="Enter name filter"
-            onChange={this.onNameChange}
+            value={this.props.filters.name1}
+            placeholder="From name filter"
+            onChange={this.onName1Change}
             />
+            <input
+            className="filter__items mobile__view-input"
+            type="text"
+            value={this.props.filters.name2}
+            placeholder="To name filter"
+            onChange={this.onName2Change}
+            />
+            <label className="mobile__view">Paid
+               <input
+                name="Paid"
+                type="checkbox"
+                checked={this.state.value}
+                onChange={this.onPaidStatuschecked}
+                />
+            </label>
             <select
-              className='filter_items'
-              value={this.props.filters.paidStatus}
-              onChange={this.onPaidStatusChange}
-            >
-              <option value="select">Select</option>
-              <option value="paid">Paid</option>
-            </select>
-            <select
-            className='filter__items'
+            className="filter__items mobile__view"
             value={this.props.filters.sortBy}
             onChange={this.onSortChange}
             >
@@ -82,7 +99,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setNameFilter: (name) => dispatch(setNameFilter(name)),
+  setName1Filter: (name1) => dispatch(setName1Filter(name1)),
+  setName2Filter: (name2) => dispatch(setName2Filter(name2)),
   setPaidFilter: (paidStatus) => dispatch(setPaidFilter(paidStatus)),
   sortByDate: () => dispatch(sortByDate()),
   sortByAmount: () => dispatch(sortByAmount()),

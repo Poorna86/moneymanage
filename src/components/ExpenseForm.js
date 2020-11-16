@@ -1,14 +1,17 @@
 import React from 'react';
 import moment from 'moment';
-import {SingleDatePicker, isInclusivelyBeforeDay } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+import HelpIcon from '@material-ui/icons/Help';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class ExpenseForm extends React.Component {
     
     constructor(props) {
         super (props)
         this.state = {
-            name: props.expense ? props.expense.name : '',
+            name1: props.expense ? props.expense.name1 : '',
+            name2: props.expense ? props.expense.name2 : '',
             amount: props.expense ? props.expense.amount : '',
             description: props.expense ? props.expense.description : '',
             phone: props.expense ? props.expense.phone : '',
@@ -18,15 +21,15 @@ class ExpenseForm extends React.Component {
             calendarFocused: false
         };
     };
-
-    onNameChange = (e) => {
-        const name = e.target.value;
-        this.setState (() => ({name}))
+    
+    onName1Change = (e) => {
+        const name1 = e.target.value;
+        this.setState (() => ({name1}))
     };
 
-    onNameChange = (e) => {
-        const name = e.target.value;
-        this.setState (() => ({name}))
+    onName2Change = (e) => {
+        const name2 = e.target.value;
+        this.setState (() => ({name2}))
     };
 
     onAmountChange = (e) => {
@@ -72,12 +75,13 @@ class ExpenseForm extends React.Component {
 
     onSubmit = (e) => {
       e.preventDefault(); //will not allow page refresh after submit button
-      if (!this.state.name || !this.state.amount || !this.state.description || !this.state.phone || !this.state.createdAt) {
+      if (!this.state.name1 || !this.state.name2 || !this.state.amount || !this.state.description || !this.state.phone || !this.state.createdAt) {
         this.setState(() => ({error: 'All input fields are mandatory' }));
       } else {
         this.setState(() => ({error: ''}))
         this.props.onSubmit({
-          name: this.state.name,
+          name1: this.state.name1,
+          name2: this.state.name2,
           amount: this.state.amount,
           description: this.state.description,
           phone: this.state.phone,
@@ -99,7 +103,8 @@ class ExpenseForm extends React.Component {
                   <table className="create__table">
                     <thead className="create__thead">
                         <tr className="create__tr">
-                          <th>Name</th>
+                          <th >Name From </th>
+                          <th >Name To </th>
                           <th>Amount</th>
                           <th>Description</th>
                           <th>Mobile Number</th>
@@ -111,11 +116,41 @@ class ExpenseForm extends React.Component {
                         <td className="create__td">
                           <input 
                             type="text"
-                            placeholder="Name"
+                            placeholder="Name from"
                             autoFocus
-                            value={this.state.name}
-                            onChange={this.onNameChange}
+                            value={this.state.name1}
+                            onChange={this.onName1Change}
                           />
+                          <OverlayTrigger
+                            key='left'
+                            placement='left'
+                              overlay={
+                              <Tooltip id='tooltip-left'>
+                                Name who gave money.
+                              </Tooltip>
+                            }
+                           >
+                            <HelpIcon className="check"/>
+                          </OverlayTrigger>
+                        </td>
+                        <td className="create__td">
+                          <input 
+                            type="text"
+                            placeholder="Name to"
+                            value={this.state.name2}
+                            onChange={this.onName2Change}
+                          />
+                          <OverlayTrigger
+                            key='left'
+                            placement='left'
+                              overlay={
+                              <Tooltip id='tooltip-left'>
+                                Name Who barrowed.
+                              </Tooltip>
+                            }
+                           >
+                            <HelpIcon />
+                          </OverlayTrigger>
                         </td>
                         <td className="create__td">
                           <input 

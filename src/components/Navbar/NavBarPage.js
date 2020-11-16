@@ -1,13 +1,22 @@
 import React from 'react';
-import '../../styles/components/NavBarPage.scss';
-import Button from '../Button';
 import {NavLink} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { startLogin, startLogout } from '../../actions/auth';
+import { history } from '../../routers/AppRouter';
 
 class NavbarPage extends React.Component {
-   state = {
-       clicked: false
+   constructor(props) {
+      super(props)
    }
-
+   state = {
+       clicked: false,
+   }
+   Authorization = event => {
+      {history.location.pathname==='/' ? 
+        this.props.startLogin() :
+        this.props.startLogout()}
+      event.preventDefault();
+   }
    handleClick = () => {
        this.setState ({clicked: !this.state.clicked})
    }
@@ -34,14 +43,20 @@ class NavbarPage extends React.Component {
                      <NavLink to="/help" className="is-active" >Help</NavLink>
                   </li>
                   <li className="nav-links-mobile">
-                     <button className="signupBtn active"> Sign Up </button>
+                     <button className="signupBtn active" onClick={this.Authorization}> 
+                        {history.location.pathname==='/' ? 'Login' : 'Logout'} 
+                     </button>
                   </li>
                </ul> 
-               
            </nav>      
         </div>
         );
     }
 }
 
-export default NavbarPage;
+const mapDispatchToProps = (dispatch) => ({
+   startLogin: () => dispatch(startLogin()),
+   startLogout: () => dispatch(startLogout())
+})
+
+export default connect(undefined,mapDispatchToProps)(NavbarPage);

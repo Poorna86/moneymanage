@@ -1,44 +1,28 @@
-
-.NavbarItems {
-    background: #5FA3E8;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.00rem;
+.Nav-header{
+    padding: 15px;
 }
-
-.navbar-logo{
+.text-indent {
+    text-indent: 6%;
+    padding-top: 5px;
+}
+.Navbar-bg {
+     background-color: #5FA3E8 !important;
+}
+.navbar-light .navbar-brand {
     color: #fff;
-    justify-self: start;
-    margin-left: 20px;
-    cursor: pointer;
-    margin-top: 15px;
     font-size: 28px;
+    margin-top: 15px;
+    margin-left: 20px;
 }
 
-.nav-menu {
-    display: grid;
-    grid-template-columns: repeat(5,auto);  //display menu in columns
-    grid-gap: 10px;     // space b/w menu items
-    list-style: none;   // remove dots
-    text-align: center;
-    width: 70vw;
-    justify-content: end;
-    margin-right: 2rem;
+.ml-5 {
+    margin-left: 80rem !important;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: #fff;
+    font-size: 18px;
 }
 
-.is-active {
-    color: white;
-    text-decoration: none; //it will remove underline of menu items
-    padding: 0.5rem 1rem;
-}
-
-.is-active:hover {
-    background-color: #6d76f7;
-    border-radius: 4px;
-    transition: all 0.2s ease-out;
-}
 .signupBtn{
     padding: 0.5rem 1rem;
     outline: none;
@@ -54,72 +38,24 @@
     background: #fff;
     color: #6568F4;
 }
-.menu-icon {
-    display: none;
-}
 
-@media screen and (max-width: 960px) {
-    .NavbarItems {
-        position: relative;
-    }
-    .nav-menu {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 44px;
-        left: -100%;
-        opacity: 1;
-        font-size: 16px;
-        transition: all 0.5s ease;
-    }
-    .nav-menu.active {
-        background: #6668f4;
-        left: 0;
-        opacity: 1;
-        transition: all 0s ease;
-        z-index: 1;
-    }
-    .nav-links{
-        text-align: center;
-        padding: 1rem;
-        width: 80%;
-        display: table;
-    }
-    .nav-links:hover{
-        background-color: #7577fa;
-        border-radius: 0;
-    }
-    .navbar-logo{
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translate(25%, 0%);
-    }
-    .menu-icon{
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        transform: translate(-100%,60%);
-        font-size: 1.8rem;
-        cursor: pointer;
-        margin-right: 5%;
-    }
-    .fa-times{
+@media only screen and (max-width: 768px) {
+    .navbar-light .navbar-brand {
         color: #fff;
+    }
+    .navbar-brand {
+        display: inline-block;
+        padding-top: .3125rem;
+        padding-bottom: .3125rem;
+        margin-right: 1rem;
         font-size: 2rem;
+        line-height: inherit;
+        white-space: nowrap;
     }
-    .nav-links-mobile{
-        margin-bottom: 1rem;
-        text-decoration: none;
-        width: 85%;
+    .ml-5 {
+        margin-left: 12rem !important;
+    }
+    .navbar-light .navbar-nav .nav-link {
         color: #fff;
-        font-size: 1.5rem;
     }
-    .signupBtn{
-        padding: 1rem;
-        border-radius: 4px;
-        color: #6568F4;
-    }
-}
+  }

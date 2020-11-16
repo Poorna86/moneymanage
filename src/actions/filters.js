@@ -1,12 +1,17 @@
 //SET_NAME_FILTER
-export const setNameFilter = (name = '') => ({
-    type: 'SET_NAME_FILTER',
-    name
+export const setName1Filter = (name1 = '') => ({
+    type: 'SET_NAME1_FILTER',
+    name1
 })
 
+export const setName2Filter = (name2 = '') => ({
+    type: 'SET_NAME2_FILTER',
+    name2
+})
 //SET_PAID_FILTER
-export const setPaidFilter = () => ({
-    type: 'SET_PAID_FILTER'
+export const setPaidFilter = (paidStatus = '') => ({
+    type: 'SET_PAID_FILTER',
+    paidStatus
 })
 
 //SORT_BY_DATE

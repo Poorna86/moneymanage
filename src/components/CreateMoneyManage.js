@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import NavBarPage from './Navbar/NavBarPage';
 import ExpenseForm from './ExpenseForm';
 import {startAddExpense} from '../actions/expenses';
 import Header from './header';
@@ -13,7 +12,6 @@ class AddExpenses extends React.Component{
     render() {
         return (
             <div>
-                <NavBarPage />
                 <Header />
                 <h2 className="pageTitle">Create Money Manage</h2>
                 <ExpenseForm 

@@ -1,7 +1,17 @@
 .filters{
-    margin-left: 10%;
+    margin-left: 8%;
 }
 
 .filter__items{
-    margin: 2%;
+    margin: 1%;
+    font-size: 14px;
 }
+
+@media screen and (max-width: 960px) {
+    .mobile__view-input{
+      width: 44%;
+    }
+    .mobile__view{
+        margin: 3%;
+    }
+  }

@@ -16,7 +16,8 @@ const ExpenseList = (props) => {
                         <th>Amount</th>
                         <th>Date</th>
                         <th>Status</th>
-                        <th>Name</th>
+                        <th>{props.filters.name2.length > 0 ? 'To Name' : 'From Name'}</th>
+                        {/* <th>Name</th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +29,7 @@ const ExpenseList = (props) => {
                                 <td>{expense.paidStatus}</td>
                                 <td>
                                     {<Link to={`/edit/${expense.id}`}>
-                                        {expense.name}
+                                        {props.filters.name2.length > 0 ? expense.name2 : expense.name1}
                                     </Link>}
                                 </td>
                             </tr>
@@ -43,7 +44,8 @@ const ExpenseList = (props) => {
 
 const mapStateToProps = (state) => {
     return{
-        expenses: selectExpenses(state.expenses, state.filters)
+        expenses: selectExpenses(state.expenses, state.filters),
+        filters: state.filters
     } 
 }
 
