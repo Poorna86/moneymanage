@@ -10,7 +10,7 @@ const config = {
     appId: process.env.FIREBASE_APPID
   };
 
-firebase.initializeApp(config)
+firebase.initializeApp(config);
 
 const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
