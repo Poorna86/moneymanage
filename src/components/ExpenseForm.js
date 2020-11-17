@@ -191,7 +191,7 @@ class ExpenseForm extends React.Component {
                              value={this.state.paidStatus}
                              onChange={this.onPaidChange}
                             >
-                              <option value="Select">Select</option>
+                              <option value="Select">Status</option>
                               <option value="Paid">Paid</option>
                             </select>
                           </td>
