@@ -145,7 +145,7 @@ class ExpenseForm extends React.Component {
                             placement='left'
                               overlay={
                               <Tooltip id='tooltip-left'>
-                                Name Who barrowed.
+                                Name Who borrowed.
                               </Tooltip>
                             }
                            >
