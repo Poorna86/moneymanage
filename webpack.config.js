@@ -1,7 +1,9 @@
-import { join } from 'path';
-import { DefinePlugin } from 'webpack';
+const path = require('path');
+const webpack = require('webpack');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 
 if (process.env.NODE_ENV === 'test') {
     require('dotenv').config({ path: '.env.test' })
@@ -9,14 +11,14 @@ if (process.env.NODE_ENV === 'test') {
     require('dotenv').config({ path: '.env.development' })
 }
 
-export default (env) => {
+module.exports = (env) => {
     const isProduction = env === 'production';
     const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
     return {
         entry: './src/app.js',
         output: {
-            path: join(__dirname, 'public','dist'),
+            path: path.join(__dirname, 'public','dist'),
             filename: 'bundle.js'
         },
         module: {
@@ -44,7 +46,7 @@ export default (env) => {
         },
         plugins: [
             new MiniCssExtractPlugin(),
-            new DefinePlugin({
+            new webpack.DefinePlugin({
                 'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
                 'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
                 'process.env.FIREBASE_DATABASE_URL': JSON.stringify(process.env.FIREBASE_DATABASE_URL),
@@ -57,7 +59,7 @@ export default (env) => {
         devtool: isProduction ? 'source-map' : 'inline-source-map',
         devServer: {
             inline: false,
-            contentBase: join(__dirname, 'public'),
+            contentBase: path.join(__dirname, 'public'),
             historyApiFallback: true,
             publicPath: '/dist/'
         }
