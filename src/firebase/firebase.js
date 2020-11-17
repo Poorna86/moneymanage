@@ -1,5 +1,7 @@
 import * as firebase from 'firebase';
 
+console.log('check', process.env.FIREBASE_API_KEY)
+console.log('projectid: ', process.env.FIREBASE_PROJECT_ID)
 const config = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
