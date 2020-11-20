@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import 'react-dates/lib/css/_datepicker.css';
 import HelpIcon from '@material-ui/icons/Help';
+import axios from 'axios';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -18,7 +19,8 @@ class ExpenseForm extends React.Component {
             createdAt: props.expense ? props.expense.createdAt : moment(),
             paidStatus: props.expense ? props.expense.paidStatus : '',
             error: '',
-            calendarFocused: false
+            calendarFocused: false,
+            events: {}
         };
     };
     
@@ -79,6 +81,26 @@ class ExpenseForm extends React.Component {
         this.setState(() => ({error: 'All input fields are mandatory' }));
       } else {
         this.setState(() => ({error: ''}))
+        const expensesData = {
+          name1: this.state.name1,
+          name2: this.state.name2,
+          amount: this.state.amount,
+          description: this.state.description,
+          phone: this.state.phone,
+          createdAt: this.state.createdAt.valueOf(),
+          paidStatus: this.state.paidStatus
+        }
+        
+        axios
+          .post('http://localhost:3000/create', expensesData)
+          .then((response) => {
+            console.log(response.data);
+            this.setState({events: response.data})
+          })
+          .catch(err => {
+            console.error('error: ', err);
+          });
+          
         this.props.onSubmit({
           name1: this.state.name1,
           name2: this.state.name2,
@@ -93,7 +115,9 @@ class ExpenseForm extends React.Component {
 
     onPaidChange = (e) => {
       const paidStatus = e.target.value;
-      this.setState(() => ({paidStatus}))
+      if (paidStatus === 'Paid') {
+        this.setState(() => ({paidStatus}))
+      }
     };
 
     render () {
