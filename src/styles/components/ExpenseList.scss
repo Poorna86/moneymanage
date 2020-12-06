@@ -1,5 +1,11 @@
+.btn_give-amount, .btn_get-amount, .btn_detail-amount {
+  margin-left: 3%;
+  font-size: medium;
+  border-radius: 5%;
+  border: lightness($color: #000000);
+}
 .container{
-  margin: 5%;
+  margin: 2%;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 1.6rem;
   border-collapse: collapse;
@@ -27,5 +33,10 @@
     border: 1px solid #ddd;
     padding: 6px;
     font-size: 12px;
+  }
+  .btn_give-amount, .btn_get-amount, .btn_detail-amount {
+    margin-top: 3%;
+    font-size: 12px;
+    border-radius: 8%;
   }
 }
