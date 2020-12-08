@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {Navbar, Nav} from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { startLogin, startLogout } from '../../actions/auth';
+import { startLogout } from '../../actions/auth';
+import {SignInScreen} from '../../firebase/firebase';
 import { history } from '../../routers/AppRouter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,10 +13,12 @@ class NavbarPage extends React.Component {
     }
     state = {
         clicked: false,
+        login: false
     }
     Authorization = event => {
+        console.log('clicked: ', history.location.pathname)
         {history.location.pathname==='/' ? 
-        this.props.startLogin() :
+        this.setState({ login: true }) :
         this.props.startLogout()}
         event.preventDefault();
     }
@@ -43,6 +46,9 @@ class NavbarPage extends React.Component {
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
+                {this.state.login && 
+                  <SignInScreen />
+                }
                 {history.location.pathname==='/' && 
                   <div className="Nav-header">
                     <h3 className="font-weight-bold">Money Management Application</h3>
@@ -55,7 +61,7 @@ class NavbarPage extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    startLogin: () => dispatch(startLogin()),
+    startLogin: (provider) => dispatch(startLogin(provider)),
     startLogout: () => dispatch(startLogout())
  })
 

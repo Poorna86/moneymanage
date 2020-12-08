@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(userRouter)
 const publicPath = path.join(__dirname, '..' , 'public');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.use(express.static(publicPath));
 

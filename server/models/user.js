@@ -26,8 +26,9 @@ const userSchema = new mongoose.Schema({
         type: Number,
         contact: true,
         required: true,
-        maxlength: 10,
-        trim: true
+        max: 10,
+        // length: 10,
+        trim: true,
     },
     createdAt:{
         type: Date,

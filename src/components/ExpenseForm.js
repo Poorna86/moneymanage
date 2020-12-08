@@ -19,8 +19,7 @@ class ExpenseForm extends React.Component {
             createdAt: props.expense ? props.expense.createdAt : moment(),
             paidStatus: props.expense ? props.expense.paidStatus : '',
             error: '',
-            calendarFocused: false,
-            events: {}
+            calendarFocused: false
         };
     };
     
@@ -92,15 +91,18 @@ class ExpenseForm extends React.Component {
         }
         
         axios
-          .post('http://localhost:3000/create', expensesData)
+          .post('http://localhost:3001/create', expensesData)
           .then((response) => {
-            console.log(response.data);
+            console.log('error', response.data);
             this.setState({events: response.data})
           })
           .catch(err => {
-            console.error('error: ', err);
+            this.setState({error: err.response.data.message})
+            console.error('error info: ', err.response.data.message);
           });
+
           
+        
         this.props.onSubmit({
           name1: this.state.name1,
           name2: this.state.name2,
