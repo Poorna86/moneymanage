@@ -15,6 +15,7 @@ class ExpenseForm extends React.Component {
             amount: props.expense ? props.expense.amount : '',
             description: props.expense ? props.expense.description : '',
             phone: props.expense ? props.expense.phone : '',
+            interest: props.expense ? props.expense.interest : '',
             createdAt: props.expense ? props.expense.createdAt : moment(),
             paidStatus: props.expense ? props.expense.paidStatus : '',
             error: '',
@@ -69,6 +70,11 @@ class ExpenseForm extends React.Component {
       }
     };
 
+    onInteresteChange = (e) => {
+      const interest = e.target.value
+      this.setState({interest})
+    }
+
     onFocusChange = ({focused}) => {
       this.setState(() => ({calendarFocused: focused}));
     };
@@ -85,6 +91,8 @@ class ExpenseForm extends React.Component {
           amount: this.state.amount,
           description: this.state.description,
           phone: this.state.phone,
+          interest: this.state.interest,
+          interestAmount: '',
           createdAt: this.state.createdAt.valueOf(),
           paidStatus: this.state.paidStatus
         })
@@ -108,6 +116,7 @@ class ExpenseForm extends React.Component {
                           <th>Amount</th>
                           <th>Description</th>
                           <th>Mobile Number</th>
+                          <th>interest</th>
                           <th>Date</th>
                         </tr>
                     </thead>
@@ -176,6 +185,14 @@ class ExpenseForm extends React.Component {
                             onChange={this.onPhoneChange}
                             maxLength="10"
                           />
+                        </td>
+                        <td className="create__td">
+                          <input
+                              placeholder = 'In Rupees'
+                              type = 'number'
+                              value={this.state.interest}
+                              onChange={this.onInteresteChange}
+                              />
                         </td>
                         <td className="create__td">
                           <input type="date"

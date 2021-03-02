@@ -70,8 +70,9 @@
         .create__td:nth-of-type(3):before { content: "Amount"; margin-left: 8%; }
         .create__td:nth-of-type(4):before { content: "Description"; margin-left: 8%; }
         .create__td:nth-of-type(5):before { content: "Mobile Number"; margin-left: 8%; }
-        .create__td:nth-of-type(6):before { content: "Date"; margin-left: 8%; }
-        .edit__td:nth-of-type(7):before {content: "Paid Status"; margin-left: 8%;}
+        .create__td:nth-of-type(6):before { content: "Interest Rate"; margin-left: 8%; }
+        .create__td:nth-of-type(7):before { content: "Date"; margin-left: 8%; }
+        .edit__td:nth-of-type(8):before {content: "Paid Status"; margin-left: 8%;}
 
         .addButton{
             font-size: 15px;

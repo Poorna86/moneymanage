@@ -4,6 +4,7 @@ import moment from 'moment';
 export default (expenses, {name1, name2, paidStatus, sortBy, startDate, endDate}) => {
       
     return expenses.filter((expense) => {
+        
         const createdAtMoment = moment(expense.createdAt)
         const expensePaidstatus = expense.paidStatus === undefined ? '' : expense.paidStatus
         const filterPaidStatus = paidStatus

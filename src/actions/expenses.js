@@ -8,8 +8,8 @@ export const addExpense = (expense) => ({
 
 export const startAddExpense = (expenseData = {}) => {
     return (dispatch, getState) => {
-        const { name1='', name2='', amount=0, description = '', phone=0, createdAt=0, paidStatus='' } = expenseData;
-        const expense = { name1, name2, amount, description, phone, createdAt, paidStatus }
+        const { name1='', name2='', amount=0, description = '', phone=0, interest=0, createdAt=0, paidStatus='' } = expenseData;
+        const expense = { name1, name2, amount, description, phone, interest, createdAt, paidStatus }
         const uid = getState().auth.uid
 
         database.ref(`users/${uid}/moneymanage`).push(expense).then((ref) => {
@@ -55,6 +55,7 @@ export const startSetExpenses = (() => {
             const expenses = []
 
             snapshot.forEach((childSnapshot) => {
+                
                 expenses.push({
                     id: childSnapshot.key,
                     ...childSnapshot.val()

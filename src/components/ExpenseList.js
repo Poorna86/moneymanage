@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import selectExpenses from '../selectors/expenses';
@@ -10,54 +10,92 @@ class ExpenseList extends React.Component {
       summaryFrom: false,
       summaryTo: false,
       detail: true,
+      indExpense: false,
+      indToExpense: false,
       fromExpenses: {},
-      toExpenses: {}
+      toExpenses: {},
+      indivisualExpense: {},
+      indivisualToExpense: {}
     }
-
+    
     onSummaryFromRpt = () => {
-        var myArray = this.props.expenses.map(function(obj) { 
-            return {
-                amount: parseInt(obj.amount), 
-                name: obj.name1
-                }
+       const holder = this.props.expenses
+       const holderExpense = holder.filter(list => {
+            list.amount = parseInt(list.amount)
+            if(list.paidStatus !== "Paid"){
+                return list
+            }
         })
-        this.state.fromExpenses = myArray.reduce((a, obj)=>{
-            var existItem = a.find(item => item.name=== obj.name)
-            if(existItem){
-                existItem.amount += obj.amount
-                return a
-            } 
-            a.push(obj)
-            return a
-        }, [])       
+        
+        this.state.fromExpenses = Object.values(holderExpense.reduce((acc, curr) => {
+            if (acc[curr.name1]) {
+                acc[curr.name1].amount += curr.amount
+            }
+            else {
+                acc[curr.name1] = { ...curr }
+            }
+            return acc
+            }, {}))   
+        
         this.setState(() => ({ summaryFrom: true,
                                 summaryTo: false,
-                                detail: false }))
+                                detail: false,
+                                indExpense: false,
+                                indToExpense: false }))
       }
       onSummaryToRpt = () => {
-        var myArray = this.props.expenses.map(function(obj) { 
-            return {
-                amount: parseInt(obj.amount), 
-                name: obj.name2
-                }
+        const holder = this.props.expenses
+        const holderExpense = holder.filter(list => {
+            list.amount = parseInt(list.amount)
+            if(list.paidStatus !== "Paid"){
+                return list
+            }
         })
-        this.state.toExpenses = myArray.reduce((a, obj)=>{
-            var existItem = a.find(item => item.name=== obj.name)
-            if(existItem){
-                existItem.amount += obj.amount
-                return a
-            } 
-            a.push(obj)
-            return a
-        }, [])       
+
+        this.state.toExpenses = Object.values(holderExpense.reduce((acc, curr) => {
+            if (acc[curr.name2]) {
+                acc[curr.name2].amount += curr.amount
+            }
+            else {
+                acc[curr.name2] = { ...curr }
+            }
+            return acc
+            }, {}))
+        
         this.setState(() => ({ summaryFrom: false,
                                 summaryTo: true,
-                                detail: false }))
+                                detail: false,
+                                indExpense: false,
+                                indToExpense: false }))
       }
     onDetailRpt = () => {
         this.setState(() => ({ detail: true,
                                 summaryFrom: false,
-                                summaryTo: false }))
+                                summaryTo: false,
+                                indExpense: false,
+                                indToExpense: false }))
+    }
+    onClickDetailList = (name2) => {
+        const expenseDetailList = this.props.expenses
+        this.state.indivisualExpense = expenseDetailList.filter((list) => {
+            return list.name2 === name2 && list.paidStatus !== 'Paid' 
+        })
+        this.setState(() => ({ detail: false,
+                                summaryFrom: false,
+                                summaryTo: false,
+                                indExpense: true,
+                                indToExpense: false }))
+    }
+    onClickToDetailList = (name1) => {
+        const expenseDetailList = this.props.expenses
+        this.state.indivisualToExpense = expenseDetailList.filter((list) => {
+            return list.name1 === name1 && list.paidStatus !== 'Paid' 
+        })
+        this.setState(() => ({ detail: false,
+                                summaryFrom: false,
+                                summaryTo: false,
+                                indExpense: false,
+                                indToExpense: true }))
     }
 
     render() {
@@ -82,7 +120,7 @@ class ExpenseList extends React.Component {
                                 { 
                                   this.state.fromExpenses.map(item=> (
                                     <tr key={this.state.fromExpenses.id}>
-                                        <td>{item.name}</td>
+                                        <td className='content_url' onClick={() => this.onClickToDetailList(item.name1)}>{item.name1}</td>
                                         <td>{item.amount}</td>
                                     </tr>
                                   ))
@@ -103,7 +141,7 @@ class ExpenseList extends React.Component {
                                 { 
                                   this.state.toExpenses.map(item=> (
                                     <tr key={this.state.fromExpenses.id}>
-                                        <td>{item.name}</td>
+                                        <td className='content_url' onClick={() => this.onClickDetailList(item.name2)}>{item.name2}</td>
                                         <td>{item.amount}</td>
                                     </tr>
                                   ))
@@ -120,6 +158,7 @@ class ExpenseList extends React.Component {
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>{this.props.filters.name2.length > 0 ? 'To Name' : 'From Name'}</th>
+                                    <th>Interest</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -134,88 +173,83 @@ class ExpenseList extends React.Component {
                                                     {this.props.filters.name2.length > 0 ? expense.name2 : expense.name1}
                                                 </Link>}
                                             </td>
+                                            <td>
+                                                {expense.interest &&
+                                                 (expense.amount*
+                                                 ((moment().diff(moment(expense.createdAt), 'months', true))/12/1)*
+                                                 (expense.interest*12/100)).toFixed(2)}
+                                            </td>
                                         </tr>
                                     ))
                                 }
+                                 
                             </tbody>       
                         </table>
                     }
-            </div>    
+                    { this.state.indExpense && 
+                        <table className="container">
+                            <thead>
+                                <tr>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>From Name</th>
+                                    <th>Interest</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    this.state.indivisualExpense.map((expense) => (
+                                        <tr key={expense.id}>
+                                            <td>{numeral(expense.amount).format('00.00')}</td>
+                                            <td>{moment(expense.createdAt).format('DD MMM YYYY')}</td>
+                                            <td>{expense.name2}</td>
+                                            <td>
+                                                {expense.interest &&
+                                                    (expense.amount*
+                                                    ((moment().diff(moment(expense.createdAt), 'months', true))/12/1)*
+                                                    (expense.interest*12/100)).toFixed(2)}
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>                
+                    }
+                    { this.state.indToExpense && 
+                        <table className="container">
+                            <thead>
+                                <tr>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>To Name</th>
+                                    <th>Interest</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    this.state.indivisualToExpense.map((expense) => (
+                                        <tr key={expense.id}>
+                                            <td>{numeral(expense.amount).format('00.00')}</td>
+                                            <td>{moment(expense.createdAt).format('DD MMM YYYY')}</td>
+                                            <td>{expense.name1}</td>
+                                            <td>
+                                                {expense.interest &&
+                                                    (expense.amount*
+                                                    ((moment().diff(moment(expense.createdAt), 'months', true))/12/1)*
+                                                    (expense.interest*12/100)).toFixed(2)}
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>                
+                    }
+            </div>
           }      
         </div>
       );
     }
   };
-// const ExpenseList = (props) => {
-// //class ExpenseList extends React.Component {
-//     var myArray = props.expenses.map(function(obj) { 
-//         return {
-//             amount: parseInt(obj.amount), 
-//             name: obj.name1
-//             }
-//          })
-        
-//     var res = myArray.reduce((a, obj)=>{
-//         var existItem = a.find(item => item.name=== obj.name);
-//         if(existItem){
-//           existItem.amount += obj.amount;
-//           return a;
-//         } 
-//         a.push(obj);
-//         return a;
-//       }, []);
-
-//       const summary = useState(false)
-//       const detail = useState(true)
-
-//       function sayHello () {
-//         this.setState({summary: true, detail: false});
-//       }    
-
-//     return (
-//         <div >
-//             {props.expenses.length === 0 && <p> No expenses to display </p>}
-//             {props.expenses.length !== 0 && 
-//                 <table className="container">
-//                     <button onClick={sayHello}> Click me!</button>
-//                     <thead>
-//                         <tr>
-//                             <th>Amount</th>
-//                             <th>Date</th>
-//                             <th>Status</th>
-//                             <th>{props.filters.name2.length > 0 ? 'To Name' : 'From Name'}</th>
-//                         </tr>
-//                     </thead>
-//                     <tbody>
-//                         {
-//                             props.expenses.map((expense) => (
-//                                 <tr key={expense.id}>
-//                                     <td>{numeral(expense.amount).format('00.00')}</td>
-//                                     <td>{moment(expense.createdAt).format('DD MMM YYYY')}</td>
-//                                     <td>{expense.paidStatus}</td>
-//                                     <td>
-//                                         {<Link to={`/edit/${expense.id}`}>
-//                                             {props.filters.name2.length > 0 ? expense.name2 : expense.name1}
-//                                         </Link>}
-//                                     </td>
-//                                 </tr>
-//                             ))
-//                         }
-//                         {
-//                             res.map(item=> (
-//                                 <tr key={res.id}>
-//                                     <td>{item.name}</td>
-//                                     <td>{item.amount}</td>
-//                                 </tr>
-//                             ))    
-//                         }
-//                     </tbody>
-//                 </table>
-//             }           
-//         </div>
-//     )    
-// };
-
 
 const mapStateToProps = (state) => {
     return{
