@@ -20,12 +20,12 @@ class ExpenseForm extends React.Component {
             createdAt: props.expense ? props.expense.createdAt : moment(),
             paidStatus: props.expense ? props.expense.paidStatus : '',
             error: '',
-            partialExpense: props.expense && props.expense.paidStatus === 'Partial Paid' ? props.expense.partialExpense : [],
+            partialExpense: props.expense && props.expense.paidStatus !== '' ? props.expense.partialExpense : [],
             calendarFocused: false,
-            partialAmountPay: props.expense && props.expense.paidStatus === 'Partial Paid' ? true : false,
+            partialAmountPay: props.expense && props.expense.paidStatus !== 'Partial Paid' ? true : false,
             disabled: props.expense && props.expense.paidStatus !== '' ? true : false,
             disableEditBtn: props.expense.paidStatus === 'Paid' ? true : false,
-            arrayLength: props.expense && props.expense.paidStatus === 'Partial Paid' ? props.expense.partialExpense.length : 0
+            arrayLength: props.expense && props.expense.paidStatus !== 'Partial Paid' ? props.expense.partialExpense.length : 0
         };
     };
 

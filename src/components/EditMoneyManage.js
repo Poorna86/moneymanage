@@ -1,7 +1,7 @@
 import React from 'react';
 import ExpenseForm from './ExpenseForm';
 import { connect } from 'react-redux';
-import Header from './Header';
+import Header from './Header_R';
 import { startEditExpense } from '../actions/expenses';
 
 export class EditMoneyManage extends React.Component {
