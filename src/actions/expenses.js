@@ -8,10 +8,10 @@ export const addExpense = (expense) => ({
 
 export const startAddExpense = (expenseData = {}) => {
     return (dispatch, getState) => {
-        const { name1='', name2='', amount=0, description = '', phone=0, interest=0, createdAt=0, paidStatus='' } = expenseData;
-        const expense = { name1, name2, amount, description, phone, interest, createdAt, paidStatus }
+        const { name1='', name2='', amount=0, description = '', phone=0, interest=0, createdAt=0, paidStatus='', partialExpense=[''] } = expenseData;
+        const expense = { name1, name2, amount, description, phone, interest, createdAt, paidStatus, partialExpense }
         const uid = getState().auth.uid
-
+        console.log(' databse expense : ', expense)
         database.ref(`users/${uid}/moneymanage`).push(expense).then((ref) => {
             dispatch(addExpense({
                 id: ref.key,
@@ -36,9 +36,11 @@ export const editExpense = (id, updates) => ({
 export const startEditExpense = ((id, updates) => {
     return (dispatch,getState) => {
         const uid = getState().auth.uid
-        return database.ref(`users/${uid}/moneymanage/${id}`).update(updates).then(() => {
+        return database.ref(`users/${uid}/moneymanage/${id}`).update(
+            updates
+            ).then(() => {
             dispatch(editExpense(id, updates))
-        })
+        }).catch((e) => console.log('error: ', e))
     }
 }) 
 

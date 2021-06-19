@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter';
 import { startSetExpenses } from './actions/expenses';
+import { startSetPartialExpenses } from './actions/partialExpenses';
 import configureStore from './store/configureStore';
 import { firebase } from './firebase/firebase';
 import { login, logout } from './actions/auth';
@@ -31,8 +32,10 @@ const renderApp = () => {
 ReactDOM.render(<p>Loading....</p>, document.getElementById('app'))
 
 firebase.auth().onAuthStateChanged((user) => {
+    console.log(user)
     if (user) {
         store.dispatch(login(user.uid))
+        store.dispatch(startSetPartialExpenses())
         store.dispatch(startSetExpenses()).then(() => {
             renderApp();
             if(history.location.pathname === '/') {

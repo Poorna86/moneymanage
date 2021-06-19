@@ -1,8 +1,44 @@
-.addButton{
-    margin-left: 30%;
+.display_flex{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.addnewrow{
+    font-size: 18px;
+    margin-left: 45%;
     margin-top: 1%;
     font-size: 18px;
+    padding: 3px 10px 3px 10px;
+    border: none;
+    font-weight: bold;
+    background-color: #2694d4;
+    border-radius: 5px;
+}
+
+.addButton_add, .addButton_cancel{
+    margin-left: 1rem;
+    font-size: 18px;
     padding: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+.display_flex .addButton_add{
+    background-color: #0d5c0d;
+    color: #fff;
+}
+
+.addButton_add-disabled{
+    background-color: #7cc27c;
+    color: #fff;
+}
+
+.display_flex .addButton_cancel{
+    background-color: #e60b0bda;
+    color: #fff;
+    margin-top: 2%;
 }
 
 .DateInput{
@@ -37,9 +73,35 @@
     font-size: 14px;
 }
 
+.create__partial-table{
+    overflow-x: auto;
+}
+
+.create__partial-tbody .create__partial-tr td input{
+    width: 8rem;
+}
+
+.create__partial-tbody .create__partial-tr td .format__updateDate{
+    width: 12.0rem;
+}
+
+.create__partial-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+  .create__partial-table thead tr th, .create__partial-table tbody tr td {
+    text-align: left;
+    padding: 2px;
+    white-space: nowrap;
+    border: 1px solid #ddd;
+    font-size: 12px;
+  }
+
 @media screen and (max-width: 960px) {
         
-    .create__table, .create__thead, .create__tbody, .create__th, .create__td, .create__tr, .addButton, .edit__td {
+    .create__table, .create__thead, .create__tbody, .create__th, .create__td, .create__tr, .edit__td {
 			display: block;
         }
         /* Hide table headers (but not display: none;, for accessibility) */
@@ -57,6 +119,7 @@
 			/* Behave  like a "row" */
 			position: relative;
 			padding-left: 40%;
+            font-size: 12px;
         }
         
         .create__td:before, .edit__td:before {
@@ -67,14 +130,20 @@
         
         .create__td:nth-of-type(1):before { content: "Name From"; margin-left: 8%; }
         .create__td:nth-of-type(2):before { content: "Name To"; margin-left: 8%; }
-        .create__td:nth-of-type(3):before { content: "Amount"; margin-left: 8%; }
+        .create__td:nth-of-type(3):before { content: "Original Amount"; margin-left: 8%; font-weight: 800; }
         .create__td:nth-of-type(4):before { content: "Description"; margin-left: 8%; }
         .create__td:nth-of-type(5):before { content: "Mobile Number"; margin-left: 8%; }
-        .create__td:nth-of-type(6):before { content: "Interest Rate"; margin-left: 8%; }
+        .create__td:nth-of-type(6):before { content: "Interest Rate"; margin-left: 8%; font-weight: 800; }
         .create__td:nth-of-type(7):before { content: "Date"; margin-left: 8%; }
         .edit__td:nth-of-type(8):before {content: "Paid Status"; margin-left: 8%;}
+        .edit__td:nth-of-type(9):before {content: "Partial Amount Status"; margin-left: 8%;}
+        .edit__td:nth-of-type(10):before {content: "Balance"; margin-left: 8%;}
 
-        .addButton{
+        .addnewrow{
+            font-size: 12px;
+        }
+
+        .addButton_add, .addButton_cancel{
             font-size: 15px;
         }
     }

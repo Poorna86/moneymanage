@@ -17,7 +17,7 @@ class ExpenseList extends React.Component {
       indivisualExpense: {},
       indivisualToExpense: {}
     }
-    
+
     onSummaryFromRpt = () => {
        const holder = this.props.expenses
        const holderExpense = holder.filter(list => {
