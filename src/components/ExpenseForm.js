@@ -19,7 +19,6 @@ class ExpenseForm extends React.Component {
             interest: props.expense ? props.expense.interest : '',
             createdAt: props.expense ? props.expense.createdAt : moment(),
             paidStatus: props.expense ? props.expense.paidStatus : '',
-            balance: props.partialExpense && props.partialExpense.balance,
             error: '',
             partialExpense: props.expense && props.expense.paidStatus === 'Partial Paid' ? props.expense.partialExpense : [],
             calendarFocused: false,

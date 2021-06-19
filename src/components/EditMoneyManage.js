@@ -3,7 +3,6 @@ import ExpenseForm from './ExpenseForm';
 import { connect } from 'react-redux';
 import Header from './Header';
 import { startEditExpense } from '../actions/expenses';
-import { startAddPartialExpense, startEditPartialExpense } from '../actions/partialExpenses';
 
 export class EditMoneyManage extends React.Component {
 
@@ -22,7 +21,6 @@ export class EditMoneyManage extends React.Component {
                 <ExpenseForm 
                     expense={this.props.expense}
                     onSubmit={this.onSubmit}
-                    partialExpense={this.props.partialExpense}
                     id={this.props.expense.id}
                 />
             </div>
@@ -32,8 +30,7 @@ export class EditMoneyManage extends React.Component {
 
 const mapStateToProps = (state, props) => {
     return {
-        expense: state.expenses.find((expense) => expense.id === props.match.params.id),
-        partialExpense: state.partialExpenses
+        expense: state.expenses.find((expense) => expense.id === props.match.params.id)
     }
 }
 
