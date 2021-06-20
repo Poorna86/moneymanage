@@ -20,12 +20,12 @@ class ExpenseForm extends React.Component {
             createdAt: props.expense ? props.expense.createdAt : moment(),
             paidStatus: props.expense ? props.expense.paidStatus : '',
             error: '',
-            partialExpense: props.expense && props.expense.paidStatus !== '' ? props.expense.partialExpense : [],
+            partialExpense: props.expense && props.expense.partialExpense ? props.expense.partialExpense : [],
             calendarFocused: false,
-            partialAmountPay: props.expense && props.expense.paidStatus !== 'Partial Paid' ? true : false,
+            partialAmountPay: props.expense && props.expense.paidStatus !== '' ? true : false,
             disabled: props.expense && props.expense.paidStatus !== '' ? true : false,
-            disableEditBtn: props.expense.paidStatus === 'Paid' ? true : false,
-            arrayLength: props.expense && props.expense.paidStatus !== 'Partial Paid' ? props.expense.partialExpense.length : 0
+            disableEditBtn: props.expense && props.expense.paidStatus === 'Paid' ? true : false,
+            arrayLength: props.expense && props.expense.partialExpense ? props.expense.partialExpense.length : 0
         };
     };
 
@@ -109,6 +109,7 @@ class ExpenseForm extends React.Component {
                                         interestAmount: '',
                                         pendingInterest: ''
                                       }
+        this.setState({arrayLength: this.state.arrayLength + 1})
         this.setState({partialExpense: [...this.state.partialExpense, initialPartialDetails]})
         this.setState({partialAmountPay: true})
       }
@@ -400,10 +401,11 @@ class ExpenseForm extends React.Component {
                           </td>
                         }
 
-                        {this.state.partialAmountPay &&
+                        {this.state.arrayLength > 0 &&
                           <div style={{overflowX: 'auto'}}>
                             <table className="create__partial-table">
-                              <thead className="create__partial-thead">
+                              
+                                <thead className="create__partial-thead">
                                   <tr className="create__partial-tr">
                                     <th>Paid Status </th>
                                     <th>Amount</th>
@@ -416,8 +418,9 @@ class ExpenseForm extends React.Component {
                                       </>
                                     }
                                   </tr>
-                              </thead>
-                                <tbody className="create__partial-tbody">
+                                </thead>
+
+                              <tbody className="create__partial-tbody">
                                 {this.state.partialExpense.map((row) => (
                                   <tr className="create__partial-tr" key={row.indexId}>
                                     <td>

@@ -11,7 +11,7 @@ export const startAddExpense = (expenseData = {}) => {
         const { name1='', name2='', amount=0, description = '', phone=0, interest=0, createdAt=0, paidStatus='', partialExpense=[''] } = expenseData;
         const expense = { name1, name2, amount, description, phone, interest, createdAt, paidStatus, partialExpense }
         const uid = getState().auth.uid
-        console.log(' databse expense : ', expense)
+        
         database.ref(`users/${uid}/moneymanage`).push(expense).then((ref) => {
             dispatch(addExpense({
                 id: ref.key,
