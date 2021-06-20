@@ -147,3 +147,9 @@
             font-size: 15px;
         }
     }
+
+@media screen and (max-width: 320px) {
+    .DateRangePicker{
+        margin-left: -7px;
+    }
+}

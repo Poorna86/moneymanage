@@ -105,8 +105,8 @@ class ExpenseList extends React.Component {
              <p> No expenses to display </p>
             :
             <div>
-                <button onClick={this.onSummaryFromRpt} className="btn_give-amount">Total Amount give</button>
-                <button onClick={this.onSummaryToRpt} className="btn_get-amount">Total Amount get</button>
+                <button onClick={this.onSummaryFromRpt} className="btn_give-amount">Amount give</button>
+                <button onClick={this.onSummaryToRpt} className="btn_get-amount">Amount get</button>
                 <button onClick={this.onDetailRpt} className="btn_detail-amount">detail Report</button>
                     { this.state.summaryFrom && 
                         <table className="container">
