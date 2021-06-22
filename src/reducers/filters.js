@@ -7,8 +7,8 @@ const filtersReducersDefaultState = {
     name2: '',
     paidStatus: '',
     sortBy: 'date',
-    startDate: moment().startOf('month'),
-    endDate: moment().endOf('month')
+    startDate: '', //moment().startOf('month'),
+    endDate: '' //moment().endOf('month')
 };
 
 const filterReducer = (state = filtersReducersDefaultState, action) => {

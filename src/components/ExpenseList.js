@@ -17,7 +17,7 @@ class ExpenseList extends React.Component {
       indivisualExpense: {},
       indivisualToExpense: {}
     }
-
+    
     onSummaryFromRpt = () => {
        const holder = this.props.expenses
        const holderExpense = holder.filter(list => {
@@ -158,7 +158,6 @@ class ExpenseList extends React.Component {
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>{this.props.filters.name2.length > 0 ? 'To Name' : 'From Name'}</th>
-                                    <th>Interest</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -172,12 +171,6 @@ class ExpenseList extends React.Component {
                                                 {<Link to={`/edit/${expense.id}`}>
                                                     {this.props.filters.name2.length > 0 ? expense.name2 : expense.name1}
                                                 </Link>}
-                                            </td>
-                                            <td>
-                                                {expense.interest &&
-                                                 (expense.amount*
-                                                 ((moment().diff(moment(expense.createdAt), 'months', true))/12/1)*
-                                                 (expense.interest*12/100)).toFixed(2)}
                                             </td>
                                         </tr>
                                     ))
@@ -193,7 +186,6 @@ class ExpenseList extends React.Component {
                                     <th>Amount</th>
                                     <th>Date</th>
                                     <th>From Name</th>
-                                    <th>Interest</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -203,12 +195,6 @@ class ExpenseList extends React.Component {
                                             <td>{numeral(expense.amount).format('00.00')}</td>
                                             <td>{moment(expense.createdAt).format('DD MMM YYYY')}</td>
                                             <td>{expense.name2}</td>
-                                            <td>
-                                                {expense.interest &&
-                                                    (expense.amount*
-                                                    ((moment().diff(moment(expense.createdAt), 'months', true))/12/1)*
-                                                    (expense.interest*12/100)).toFixed(2)}
-                                            </td>
                                         </tr>
                                     ))
                                 }
@@ -222,7 +208,6 @@ class ExpenseList extends React.Component {
                                     <th>Amount</th>
                                     <th>Date</th>
                                     <th>To Name</th>
-                                    <th>Interest</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -232,12 +217,6 @@ class ExpenseList extends React.Component {
                                             <td>{numeral(expense.amount).format('00.00')}</td>
                                             <td>{moment(expense.createdAt).format('DD MMM YYYY')}</td>
                                             <td>{expense.name1}</td>
-                                            <td>
-                                                {expense.interest &&
-                                                    (expense.amount*
-                                                    ((moment().diff(moment(expense.createdAt), 'months', true))/12/1)*
-                                                    (expense.interest*12/100)).toFixed(2)}
-                                            </td>
                                         </tr>
                                     ))
                                 }
