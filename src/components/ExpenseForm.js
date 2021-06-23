@@ -36,31 +36,34 @@ class ExpenseForm extends React.Component {
     }
 
     calculateIntereset = () => {
-      
-      if (this.props.expense.interest) {
-        
-          if(!this.props.expense.partialExpense) {
-            this.calculateSimpleIntereset()
-          } else {
-              let length = this.props.expense.partialExpense.length - 1
-              let partialExpenseArray = this.props.expense.partialExpense
+      console.log('interest: ', this.props.expense)
+      if (this.props.expense) {
+        if (this.props.expense.interest) {
+          
+          if(this.props.expense.partialExpense) {
+          
+            let length = this.props.expense.partialExpense.length - 1
+            let partialExpenseArray = this.props.expense.partialExpense
+            
+            for (let i = (length) ; i <= length; i++) {
               
-              for (let i = (length) ; i <= length; i++) {
+              if(partialExpenseArray[i].indexId === 1) {
+                this.calculateSimpleIntereset()
+              } else {
                 
-                if(partialExpenseArray[i].indexId === 1) {
-                  this.calculateSimpleIntereset()
-                } else {
-                  
-                  let displayInterest = 
-                        (partialExpenseArray[i].balance *
-                          ((moment().diff(moment(partialExpenseArray[i].updateDate), 'months', true))/12/1)*
-                          (this.props.expense.interest*12/100)).toFixed(0)  
-                  this.setState({displayInterest})
-                }
+                let displayInterest = 
+                      (partialExpenseArray[i].balance *
+                        ((moment().diff(moment(partialExpenseArray[i].updateDate), 'months', true))/12/1)*
+                        (this.props.expense.interest*12/100)).toFixed(0)  
+                this.setState({displayInterest})
               }
             }
+          } else {
+              this.calculateSimpleIntereset()
+            }
+          }
+        }
       }
-    }
 
     calculateSimpleIntereset = () => {
       const interestAmount = (this.props.expense.amount *
@@ -199,6 +202,22 @@ class ExpenseForm extends React.Component {
       const myRowIndex = partialExpense.findIndex((row) => row.indexId === id)
       partialExpense[myRowIndex].updateDate = event.target.value ? event.target.value : moment().valueOf()
       
+      const enddate = partialExpense[myRowIndex].updateDate
+
+      // if (this.state.interest && id === 1) {
+
+      //   partialExpense[myRowIndex].interestAmount = 
+      //                   (this.state.amount *
+      //                     ((moment(enddate).diff(moment(this.state.createdAt), 'months', true))/12/1)*
+      //                     (this.state.interest*12/100)).toFixed(0)
+      // } else if (this.state.interest) {
+      //   const PrevEnddate = partialExpense[myRowIndex - 1].updateDate
+      //   partialExpense[myRowIndex].interestAmount = 
+      //                   (partialExpense[myRowIndex].balance *
+      //                     ((moment(enddate).diff(moment(PrevEnddate), 'months', true))/12/1)*
+      //                     (this.state.interest*12/100)).toFixed(0)
+      // }
+
       if (partialExpense[myRowIndex].balanceUpdate = true){
         partialExpense[myRowIndex].balanceUpdate = false
       }
@@ -220,10 +239,13 @@ class ExpenseForm extends React.Component {
                             (this.state.interest*12/100)).toFixed(0)
         } else {
           const PrevEnddate = partialExpense[myRowIndex - 1].updateDate
+          console.log('current updateDate: ', partialExpense[myRowIndex].updateDate)
+          console.log('prev updatedate: ', PrevEnddate)
           partialExpense[myRowIndex].interestAmount = 
-                        (partialExpense[myRowIndex].balance *
+                        (partialExpense[myRowIndex - 1].balance *
                           ((moment(partialExpense[myRowIndex].updateDate).diff(moment(PrevEnddate), 'months', true))/12/1)*
                           (this.state.interest*12/100)).toFixed(0)
+                          console.log('interestAmount: ', partialExpense[myRowIndex].interestAmount)
         }
       }
 
@@ -235,7 +257,8 @@ class ExpenseForm extends React.Component {
                       const prevInterestCurrentInterest = partialExpense[myRowIndex].interestAmount - partialExpense[myRowIndex - 1].pendingInterest
                       partialExpense[myRowIndex].pendingInterest = (partialExpense[myRowIndex].partialAmount - prevInterestCurrentInterest).toFixed(0)
                   } else {
-                    partialExpense[myRowIndex].pendingInterest = 0
+                    partialExpense[myRowIndex].pendingInterest = (partialExpense[myRowIndex].partialAmount - partialExpense[myRowIndex].interestAmount).toFixed(0)
+                    // partialExpense[myRowIndex].pendingInterest = 0
                   }
       }
       //set Final Balanace
@@ -332,7 +355,7 @@ class ExpenseForm extends React.Component {
                           <th style={{fontWeight: 'bold'}}> Original Amount</th>
                           <th>Description</th>
                           <th>Mobile Number</th>
-                          <th style={{fontWeight: 'bold'}}>interest</th>
+                          <th style={{fontWeight: 'bold'}}>interest Rate</th>
                           <th>Date</th>
                           <th>Paid Status</th>
                           <th>Interest Amount</th>
@@ -428,24 +451,27 @@ class ExpenseForm extends React.Component {
                           />
                         </td>
                         {window.location.pathname.search("edit") === 1 &&
-                          <td className='edit__td'> 
-                            <select
-                             disabled = {this.state.disabled}
-                             value={this.state.paidStatus}
-                             onChange={this.onPaidChange}
-                            >
-                              <option value="Select"> {`  `} </option>
-                              <option value="Partial Paid">Partial Paid</option>
-                              <option value="Paid">Paid</option>
-                            </select>
-                          </td>
+                          <>
+                            <td className='edit__td'> 
+                              <select
+                              disabled = {this.state.disabled}
+                              value={this.state.paidStatus}
+                              onChange={this.onPaidChange}
+                              >
+                                <option value="Select"> {`  `} </option>
+                                <option value="Partial Paid">Partial Paid</option>
+                                <option value="Paid">Paid</option>
+                              </select>
+                            </td>
+                          </>
                         }
-                        <td className="create__td">
+                        <td className="edit__td">
                           <input
-                              placeholder = ''
-                              type = 'number'
-                              value={this.state.displayInterest}
-                              />
+                            disabled = {this.state.disabled}
+                            placeholder = ''
+                            type = 'number'
+                            value={this.state.displayInterest}
+                          />
                         </td>
                         {this.state.arrayLength > 0 &&
                           <div style={{overflowX: 'auto'}}>
