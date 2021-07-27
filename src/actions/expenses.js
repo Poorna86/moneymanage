@@ -1,4 +1,5 @@
 import database from '../firebase/firebase';
+import { history } from '../routers/AppRouter';
 
 //ADD_EXPENSE
 export const addExpense = (expense) => ({
@@ -44,6 +45,22 @@ export const startEditExpense = ((id, updates) => {
         }).catch((e) => console.log('error: ', e))
     }
 }) 
+
+//DELETE_EXPENSE
+export const deleteExpense = ({ id } = {}) => ({
+    type: 'DELETE_EXPENSE',
+    id
+});
+
+export const startDeleteExpense = ( { id } = {} ) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid
+        
+        database.ref(`users/${uid}/moneymanage/${id}`).remove().then(() => {
+          dispatch(deleteExpense({ id }))
+        })
+    }
+  }
 
 //SET_EXPENSE
 export const setExpense = (expenses) => ({

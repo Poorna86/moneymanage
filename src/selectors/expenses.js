@@ -2,7 +2,7 @@ import moment from 'moment';
 
 //get visible expenses
 export default (expenses, {name1, name2, paidStatus, sortBy, startDate, endDate}) => {
-      
+    
     return expenses.filter((expense) => {
         
         const createdAtMoment = moment(expense.createdAt)
@@ -21,5 +21,6 @@ export default (expenses, {name1, name2, paidStatus, sortBy, startDate, endDate}
         } else if (sortBy === 'amount'){
             return a.amount < b.amount ? 1 : -1;
         }
-    });
+    }); 
+    
 }

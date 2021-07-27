@@ -3,14 +3,20 @@ import ExpenseForm from './ExpenseForm';
 import { connect } from 'react-redux';
 import Header from './Header_R';
 import { startEditExpense } from '../actions/expenses';
+import { startDeleteExpense } from '../actions/expenses';
 
 export class EditMoneyManage extends React.Component {
 
     onSubmit = (expense) => {
-        
         this.props.startEditExpense(this.props.expense.id, expense);
-        
         this.props.history.push('/');
+    }
+
+    onDelete = (deleteYes) => {
+        if (deleteYes) {
+            this.props.startDeleteExpense({ id: this.props.expense.id })
+            this.props.history.push('/');
+        }
     }
 
     render() {
@@ -21,7 +27,9 @@ export class EditMoneyManage extends React.Component {
                 <ExpenseForm 
                     expense={this.props.expense}
                     onSubmit={this.onSubmit}
+                    onDelete={this.onDelete}
                     id={this.props.expense.id}
+                    history={this.props.history}
                 />
             </div>
         )
@@ -35,7 +43,8 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense))
+    startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense)),
+    startDeleteExpense: (data) => dispatch(startDeleteExpense(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (EditMoneyManage);

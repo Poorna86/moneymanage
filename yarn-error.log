@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\kumari\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add reselect
+  C:\Program Files\nodejs\node.exe C:\Users\kumari\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add regenerator-runtime
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\kumari\bin;C:\Windows\System32\wbem;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\heroku\bin;C:\Users\kumari\AppData\Roaming\npm;C:\Windows\system32;C:\Program Files\Git\usr\bin;C:\Program Files\Git\cmd;C:\Users\kumari\AppData\Local\Programs\Microsoft VS Code\bin
@@ -14,16 +14,8 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz: ESOCKETTIMEDOUT
-      at ClientRequest.<anonymous> (C:\Users\kumari\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141375:19)
-      at Object.onceWrapper (events.js:416:28)
-      at ClientRequest.emit (events.js:310:20)
-      at TLSSocket.emitRequestTimeout (_http_client.js:714:9)
-      at Object.onceWrapper (events.js:416:28)
-      at TLSSocket.emit (events.js:310:20)
-      at TLSSocket.Socket._onTimeout (net.js:479:8)
-      at listOnTimeout (internal/timers.js:549:17)
-      at processTimers (internal/timers.js:492:7)
+  Error: connect ETIMEDOUT 104.16.22.35:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1141:16)
 
 npm manifest: 
   {

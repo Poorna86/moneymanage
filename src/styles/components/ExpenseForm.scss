@@ -17,7 +17,7 @@
     border-radius: 5px;
 }
 
-.addButton_add, .addButton_cancel{
+.addButton_add, .addButton_cancel, .addButton_delete, .addButton_delete-disabled, .addButton_add-disabled{
     margin-left: 1rem;
     font-size: 18px;
     padding: 5px;
@@ -35,10 +35,19 @@
     color: #fff;
 }
 
+.addButton_delete-disabled{
+    background-color: #8c7d7d;
+    color: #fff;
+}
+
 .display_flex .addButton_cancel{
     background-color: #e60b0bda;
     color: #fff;
-    margin-top: 2%;
+}
+
+.display_flex .addButton_delete{
+    background-color: #500303;
+    color: #fff;
 }
 
 .DateInput{
@@ -101,7 +110,7 @@
 
 @media screen and (max-width: 960px) {
         
-    .create__table, .create__thead, .create__tbody, .create__th, .create__td, .create__tr, .edit__td {
+    .create__table, .create__thead, .create__tbody, .create__th, .create__td, .create__tr, .edit__td, .edit__td-paidDate, .edit__td-interestAmount {
 			display: block;
         }
         /* Hide table headers (but not display: none;, for accessibility) */
@@ -115,14 +124,14 @@
             margin: 0 0 1rem 0;
           }
         
-        .create__td, .edit__td {
+        .create__td, .edit__td, .edit__td-paidDate, .edit__td-interestAmount {
 			/* Behave  like a "row" */
 			position: relative;
 			padding-left: 40%;
             font-size: 12px;
         }
         
-        .create__td:before, .edit__td:before {
+        .create__td:before, .edit__td:before, .edit__td-paidDate:before, .edit__td-interestAmount {
 			position: absolute;
 			top: 0;
 			left: 6px;
@@ -137,13 +146,13 @@
         .create__td:nth-of-type(7):before { content: "Date"; margin-left: 8%; }
         .edit__td:nth-of-type(8):before {content: "Paid Status"; margin-left: 8%;}
         .edit__td:nth-of-type(9):before {content: "Interest Amount"; margin-left: 8%;}
-        // .edit__td:nth-of-type(10):before {content: "Balance"; margin-left: 8%;}
+        .edit__td:nth-of-type(10):before {content: "Paid Date"; margin-left: 8%;}
 
         .addnewrow{
             font-size: 12px;
         }
 
-        .addButton_add, .addButton_cancel{
+        .addButton_add, .addButton_cancel, .addButton_delete, .addButton_delete-disabled, .addButton_add-disabled{
             font-size: 15px;
         }
     }

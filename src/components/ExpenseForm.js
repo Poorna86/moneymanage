@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import {NavLink} from 'react-router-dom';
 import 'react-dates/lib/css/_datepicker.css';
 import HelpIcon from '@material-ui/icons/Help';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { startDeleteExpense } from '../actions/expenses';
 
 class ExpenseForm extends React.Component {
     
@@ -17,6 +19,7 @@ class ExpenseForm extends React.Component {
             description: props.expense ? props.expense.description : '',
             phone: props.expense ? props.expense.phone : '',
             interest: props.expense && props.expense.interest ? props.expense.interest : 0,
+            paidDate: props.expense && props.expense.paidDate ? props.expense.paidDate : moment(),
             createdAt: props.expense ? props.expense.createdAt : moment(),
             paidStatus: props.expense ? props.expense.paidStatus : '',
             error: '',
@@ -26,7 +29,8 @@ class ExpenseForm extends React.Component {
             disabled: props.expense && props.expense.paidStatus !== '' ? true : false,
             disableEditBtn: props.expense && props.expense.paidStatus === 'Paid' ? true : false,
             arrayLength: props.expense && props.expense.partialExpense ? props.expense.partialExpense.length : 0,
-            displayInterest: 0
+            displayInterest: 0,
+            editPage: window.location.pathname.search("edit") === 1 ? true : false
         };
         this.calculateIntereset = this.calculateIntereset.bind(this);
     };
@@ -39,24 +43,28 @@ class ExpenseForm extends React.Component {
       
       if (this.props.expense) {
         if (this.props.expense.interest) {
-          
+  
           if(this.props.expense.partialExpense) {
-          
-            let length = this.props.expense.partialExpense.length - 1
-            let partialExpenseArray = this.props.expense.partialExpense
-            
-            for (let i = (length) ; i <= length; i++) {
+            if (this.props.expense.partialExpense.length > 0) {
+
+              let length = this.props.expense.partialExpense.length - 1
+              let partialExpenseArray = this.props.expense.partialExpense
               
-              if(partialExpenseArray[i].indexId === 1) {
-                this.calculateSimpleIntereset()
-              } else {
+              for (let i = (length) ; i <= length; i++) {
                 
-                let displayInterest = 
-                      (partialExpenseArray[i].balance *
-                        ((moment().diff(moment(partialExpenseArray[i].updateDate), 'months', true))/12/1)*
-                        (this.props.expense.interest*12/100)).toFixed(0)  
-                this.setState({displayInterest})
+                if(partialExpenseArray[i].indexId === 1) {
+                  this.calculateSimpleIntereset()
+                } else {
+                  
+                  let displayInterest = 
+                        (partialExpenseArray[i].balance *
+                          ((moment().diff(moment(partialExpenseArray[i].updateDate), 'months', true))/12/1)*
+                          (this.props.expense.interest*12/100)).toFixed(0)  
+                  this.setState({displayInterest})
+                }
               }
+            } else {
+              this.calculateSimpleIntereset()
             }
           } else {
               this.calculateSimpleIntereset()
@@ -128,6 +136,16 @@ class ExpenseForm extends React.Component {
           this.setState(()=> ({updateDate}));
       }
     };
+
+    onPaidDateChange = (e) => {
+      e.persist();
+
+      const paidDate = e.target.value
+
+      if(paidDate) {
+        this.setState(() => ({paidDate}))
+      }
+    }
 
     onInteresteChange = (e) => {
       const interest = e.target.value
@@ -281,6 +299,7 @@ class ExpenseForm extends React.Component {
       partialExpense[myRowIndex].balanceUpdate = true
       if (partialExpense[myRowIndex].balance <= 0 ){
         this.setState({paidStatus: 'Paid'})
+        this.setState({paidDate: partialExpense[myRowIndex].updateDate})
         partialExpense[myRowIndex].partialPaidStatus = 'Paid'
       } else {
         partialExpense[myRowIndex].partialPaidStatus = 'Partial Paid'
@@ -297,9 +316,11 @@ class ExpenseForm extends React.Component {
       this.setState({ partialExpense })
     }
 
+     deleteRecord = () => {
+      this.props.onDelete({deleteYes: true})
+    }
+
     onSubmit = (e) => {
-      e.preventDefault(); //will not allow page refresh after submit button
-      
       this.state.partialExpense.forEach(element => {
         if (element.balanceUpdate === false) {
           this.onClickUpdateBalance(element.indexId)
@@ -319,6 +340,7 @@ class ExpenseForm extends React.Component {
           interest: this.state.interest,
           createdAt: this.state.createdAt.valueOf(),
           paidStatus: this.state.paidStatus,
+          paidDate: this.state.paidStatus === 'Paid' ? this.state.paidDate.valueOf() : '',
           partialExpense: this.state.partialExpense
         } )
       }
@@ -327,7 +349,7 @@ class ExpenseForm extends React.Component {
     render () {
         return (
             <div>
-                <form onSubmit={this.onSubmit}>
+                <form >
                   <table className="create__table">
                     <thead className="create__thead">
                         <tr className="create__tr">
@@ -339,6 +361,7 @@ class ExpenseForm extends React.Component {
                           <th style={{fontWeight: 'bold'}}>interest Rate</th>
                           <th>Date</th>
                           <th>Paid Status</th>
+                          <th>Paid Date</th>
                           <th>Interest Amount</th>
                         </tr>
                     </thead>
@@ -432,27 +455,34 @@ class ExpenseForm extends React.Component {
                           />
                         </td>
                         {window.location.pathname.search("edit") === 1 &&
-                          <>
-                            <td className='edit__td'> 
-                              <select
-                              disabled = {this.state.disabled}
-                              value={this.state.paidStatus}
-                              onChange={this.onPaidChange}
-                              >
-                                <option value="Select"> {`  `} </option>
-                                <option value="Partial Paid">Partial Paid</option>
-                                <option value="Paid">Paid</option>
-                              </select>
-                            </td>
-                          </>
+                          <td className='edit__td'> 
+                            <select
+                            disabled = {this.state.disabled}
+                            value={this.state.paidStatus}
+                            onChange={this.onPaidChange}
+                            >
+                              <option value="Select"> {`  `} </option>
+                              <option value="Partial Paid">Partial Paid</option>
+                              <option value="Paid">Paid</option>
+                            </select>
+                          </td>
                         }
-                        { this.state.arrayLength > 0 &&
+                        <td className="edit__td">
+                          <input
+                            disabled = {this.state.disabled}
+                            placeholder = ''
+                            type = 'number'
+                            value={this.state.displayInterest}
+                          />
+                        </td>
+                        {this.state.paidStatus === 'Paid' &&
                           <td className="edit__td">
-                            <input
+                            <input type="date"
                               disabled = {this.state.disabled}
-                              placeholder = ''
-                              type = 'number'
-                              value={this.state.displayInterest}
+                              placeholder="select date" name="date" 
+                              onChange={this.onPaidDateChange}
+                              value={moment(this.state.paidDate).format("YYYY-MM-DD")}
+                              max={moment(this.state.paidDate).format("YYYY-MM-DD")}
                             />
                           </td>
                         }
@@ -554,14 +584,19 @@ class ExpenseForm extends React.Component {
                       }
                     </tbody>
                    </table>
-                   <div className='display_flex'>
-                      <button disabled={this.state.disableEditBtn} className={this.state.disableEditBtn ? "addButton_add-disabled" : "addButton_add"}>{window.location.pathname.search("edit") === 1 ? 'Edit Entry' : 'Add Entry'}</button>
-                      <NavLink to="/dashboard" ><button className='addButton_cancel'>Cancel</button></NavLink>                    
-                   </div>
                 </form>
+                <div className='display_flex'>
+                  <button type="submit" onClick={this.onSubmit} disabled={this.state.disableEditBtn} className={this.state.disableEditBtn ? "addButton_add-disabled" : "addButton_add"}>{ this.state.editPage ? 'Edit Entry' : 'Add Entry'}</button>
+                  <NavLink to="/dashboard" ><button className='addButton_cancel'>Cancel</button></NavLink>
+                  <button type="submit" className={this.state.editPage ? 'addButton_delete' : 'addButton_delete-disabled'} disabled={this.state.editPage ? false : true } onClick={this.deleteRecord}>Delete</button>
+                </div>
             </div>
         );
     };    
 };
 
-export default ExpenseForm;
+const mapDispatchToProps = (dispatch) => ({
+  startDeleteExpense: (id) => dispatch(startDeleteExpense(id))
+})
+
+export default connect(undefined, mapDispatchToProps) (ExpenseForm)
