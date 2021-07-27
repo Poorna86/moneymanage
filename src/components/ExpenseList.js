@@ -157,7 +157,7 @@ class ExpenseList extends React.Component {
                                     <th>Amount</th>
                                     <th>Date</th>
                                     <th>Status</th>
-                                    <th>{this.props.filters.name2.length > 0 ? 'To Name' : 'From Name'}</th>
+                                    <th>{this.props.filters.name1.length > 0 ? 'From Name' : 'To Name'}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -169,7 +169,7 @@ class ExpenseList extends React.Component {
                                             <td>{expense.paidStatus}</td>
                                             <td>
                                                 {<Link to={`/edit/${expense.id}`}>
-                                                    {this.props.filters.name2.length > 0 ? expense.name2 : expense.name1}
+                                                    {this.props.filters.name1.length > 0 ? expense.name1 : expense.name2}
                                                 </Link>}
                                             </td>
                                         </tr>
