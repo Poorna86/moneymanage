@@ -15,7 +15,9 @@ class ExpenseList extends React.Component {
       fromExpenses: {},
       toExpenses: {},
       indivisualExpense: {},
-      indivisualToExpense: {}
+      indivisualToExpense: {},
+      indivisualToAmount: 0,
+      indivisualFromAmount: 0
     }
     
     onSummaryFromRpt = () => {
@@ -86,7 +88,7 @@ class ExpenseList extends React.Component {
                                 indExpense: true,
                                 indToExpense: false }))
     }
-    onClickToDetailList = (name1) => {
+    onClickToDetailList = (name1, indToAmount) => {
         const expenseDetailList = this.props.expenses
         this.state.indivisualToExpense = expenseDetailList.filter((list) => {
             return list.name1 === name1 && list.paidStatus !== 'Paid' 
@@ -95,7 +97,8 @@ class ExpenseList extends React.Component {
                                 summaryFrom: false,
                                 summaryTo: false,
                                 indExpense: false,
-                                indToExpense: true }))
+                                indToExpense: true,
+                                indivisualToAmount: indToAmount }))
     }
 
     render() {
@@ -120,7 +123,7 @@ class ExpenseList extends React.Component {
                                 { 
                                   this.state.fromExpenses.map(item=> (
                                     <tr key={this.state.fromExpenses.id}>
-                                        <td className='content_url' onClick={() => this.onClickToDetailList(item.name1)}>{item.name1}</td>
+                                        <td className='content_url' onClick={() => this.onClickToDetailList(item.name1, item.amount)}>{item.name1}</td>
                                         <td>{item.amount}</td>
                                     </tr>
                                   ))
@@ -185,9 +188,9 @@ class ExpenseList extends React.Component {
                         <table className="container">
                             <thead>
                                 <tr>
+                                    <th>From Name</th>
                                     <th>Amount</th>
                                     <th>Date</th>
-                                    <th>From Name</th>
                                     <th>Description</th>
                                 </tr>
                             </thead>
@@ -195,23 +198,29 @@ class ExpenseList extends React.Component {
                                 {
                                     this.state.indivisualExpense.map((expense) => (
                                         <tr key={expense.id}>
+                                            <td>{expense.name2}</td>
                                             <td>{numeral(expense.amount).format('00.00')}</td>
                                             <td>{moment(expense.createdAt).format('DD MMM YYYY')}</td>
-                                            <td>{expense.name2}</td>
                                             <td>{expense.description}</td>
                                         </tr>
                                     ))
                                 }
                             </tbody>
-                        </table>                
+                            <thead>
+                                <tr>
+                                    <th>Total  = </th>
+                                    <th>{this.state.indivisualFromAmount}</th>
+                                </tr>
+                            </thead>
+                        </table>        
                     }
                     { this.state.indToExpense && 
                         <table className="container">
                             <thead>
                                 <tr>
+                                    <th>To Name</th>
                                     <th>Amount</th>
                                     <th>Date</th>
-                                    <th>To Name</th>
                                     <th>Description</th>
                                 </tr>
                             </thead>
@@ -219,14 +228,21 @@ class ExpenseList extends React.Component {
                                 {
                                     this.state.indivisualToExpense.map((expense) => (
                                         <tr key={expense.id}>
+                                            <td>{expense.name1}</td>
                                             <td>{numeral(expense.amount).format('00.00')}</td>
                                             <td>{moment(expense.createdAt).format('DD MMM YYYY')}</td>
-                                            <td>{expense.name1}</td>
                                             <td>{expense.description}</td>
                                         </tr>
                                     ))
                                 }
                             </tbody>
+                            
+                            <thead>
+                                <tr>
+                                    <th>Total  = </th>
+                                    <th>{this.state.indivisualToAmount}</th>
+                                </tr>
+                            </thead>
                         </table>                
                     }
             </div>
