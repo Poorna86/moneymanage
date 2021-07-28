@@ -161,7 +161,7 @@ class ExpenseList extends React.Component {
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>{this.props.filters.name1.length > 0 ? 'From Name' : 'To Name'}</th>
-                                    <th>Description</th>
+                                    <th className='description_width'>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -191,7 +191,7 @@ class ExpenseList extends React.Component {
                                     <th>From Name</th>
                                     <th>Amount</th>
                                     <th>Date</th>
-                                    <th>Description</th>
+                                    <th className='description_width'>Description</th>
                                 </tr>
                             </thead>
                             <tbody>

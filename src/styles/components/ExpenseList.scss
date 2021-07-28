@@ -25,10 +25,14 @@
     white-space: nowrap;
 }
 
+.description_width{
+  width: fit-content;
+}
+
 @media screen and (max-width: 960px) {
   .container{
-    margin-right: 20%;
-    width: 80%;
+    margin-right: 2%;
+    width: 98%;
   }
   .container td, .container th {
     border: 1px solid #ddd;
