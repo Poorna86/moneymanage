@@ -161,7 +161,6 @@ class ExpenseList extends React.Component {
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>{this.props.filters.name1.length > 0 ? 'From Name' : 'To Name'}</th>
-                                    <th className='description_width'>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -176,7 +175,6 @@ class ExpenseList extends React.Component {
                                                     {this.props.filters.name1.length > 0 ? expense.name1 : expense.name2}
                                                 </Link>}
                                             </td>
-                                            <td>{expense.description}</td>
                                         </tr>
                                     ))
                                 }
@@ -185,13 +183,13 @@ class ExpenseList extends React.Component {
                         </table>
                     }
                     { this.state.indExpense && 
-                        <table className="container">
+                        <table className="container1">
                             <thead>
                                 <tr>
                                     <th>From Name</th>
                                     <th>Amount</th>
                                     <th>Date</th>
-                                    <th className='description_width'>Description</th>
+                                    <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -215,13 +213,13 @@ class ExpenseList extends React.Component {
                         </table>        
                     }
                     { this.state.indToExpense && 
-                        <table className="container">
+                        <table className="container1">
                             <thead>
                                 <tr>
                                     <th>To Name</th>
                                     <th>Amount</th>
                                     <th>Date</th>
-                                    <th>Description</th>
+                                    <th className='description_width'>Description</th>
                                 </tr>
                             </thead>
                             <tbody>

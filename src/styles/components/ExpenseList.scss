@@ -4,7 +4,7 @@
   border-radius: 5%;
   border: lightness($color: #000000);
 }
-.container{
+.container, .container1{
   margin: 2%;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 1.6rem;
@@ -13,28 +13,28 @@
   overflow-wrap: break-word;
 }
 
-.container td, .container th {
+.container td, .container th, .container1 td, .container1 th {
     border: 1px solid #ddd;
     padding: 8px;
   }
 
-.container th {
+.container th, .container1 th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
     white-space: nowrap;
 }
 
-.description_width{
-  width: fit-content;
-}
-
 @media screen and (max-width: 960px) {
   .container{
+    margin-right: 20%;
+    width: 80%;
+  }
+  .container1{
     margin-right: 2%;
     width: 98%;
   }
-  .container td, .container th {
+  .container td, .container th, .container1 td, .container1 th {
     border: 1px solid #ddd;
     padding: 6px;
     font-size: 12px;
