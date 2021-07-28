@@ -158,6 +158,7 @@ class ExpenseList extends React.Component {
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>{this.props.filters.name1.length > 0 ? 'From Name' : 'To Name'}</th>
+                                    <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -172,6 +173,7 @@ class ExpenseList extends React.Component {
                                                     {this.props.filters.name1.length > 0 ? expense.name1 : expense.name2}
                                                 </Link>}
                                             </td>
+                                            <td>{expense.description}</td>
                                         </tr>
                                     ))
                                 }
@@ -186,6 +188,7 @@ class ExpenseList extends React.Component {
                                     <th>Amount</th>
                                     <th>Date</th>
                                     <th>From Name</th>
+                                    <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -195,6 +198,7 @@ class ExpenseList extends React.Component {
                                             <td>{numeral(expense.amount).format('00.00')}</td>
                                             <td>{moment(expense.createdAt).format('DD MMM YYYY')}</td>
                                             <td>{expense.name2}</td>
+                                            <td>{expense.description}</td>
                                         </tr>
                                     ))
                                 }
@@ -208,6 +212,7 @@ class ExpenseList extends React.Component {
                                     <th>Amount</th>
                                     <th>Date</th>
                                     <th>To Name</th>
+                                    <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -217,6 +222,7 @@ class ExpenseList extends React.Component {
                                             <td>{numeral(expense.amount).format('00.00')}</td>
                                             <td>{moment(expense.createdAt).format('DD MMM YYYY')}</td>
                                             <td>{expense.name1}</td>
+                                            <td>{expense.description}</td>
                                         </tr>
                                     ))
                                 }
