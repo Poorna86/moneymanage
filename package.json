@@ -13,8 +13,8 @@
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
     "test": "jest --config=jest.config.json",
-    "start": "env-cmd .env.development node server/server.js",
-    "heroku-postbuild": "yarn run build:prod"
+    "start": "node server/server.js",
+    "heroku-postbuild": "npm run build:prod"
   },
   "dependencies": {
     "@babel/core": "^7.11.6",
