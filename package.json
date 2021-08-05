@@ -13,6 +13,7 @@
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
     "test": "jest --config=jest.config.json",
+    "start-dev": "env-cmd .env.development node server/server.js",
     "start": "node server/server.js",
     "heroku-postbuild": "npm run build:prod"
   },
@@ -34,6 +35,7 @@
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.5.3",
     "css-loader": "^4.3.0",
+    "env-cmd": "8.0.2",
     "express": "^4.17.1",
     "extract-text-webpack-plugin": "3.0.0",
     "firebase": "^7.24.0",
@@ -64,9 +66,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
-    "cross-env": "7.0.2",
-    "dotenv": "8.2.0",
-    "env-cmd": "8.0.2",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
     "jest": "^26.5.3",
     "live-server": "^1.2.1"
   }

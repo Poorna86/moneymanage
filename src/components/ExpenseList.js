@@ -144,7 +144,7 @@ class ExpenseList extends React.Component {
                                 { 
                                   this.state.toExpenses.map(item=> (
                                     <tr key={this.state.fromExpenses.id}>
-                                        <td className='content_url' onClick={() => this.onClickDetailList(item.name2)}>{item.name2}</td>
+                                        <td className='content_url' onClick={() => this.onClickDetailList(item.name2, item.amount)}>{item.name2}</td>
                                         <td>{item.amount}</td>
                                     </tr>
                                   ))
