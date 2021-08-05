@@ -77,7 +77,7 @@ class ExpenseList extends React.Component {
                                 indExpense: false,
                                 indToExpense: false }))
     }
-    onClickDetailList = (name2) => {
+    onClickDetailList = (name2, indfromAmount) => {
         const expenseDetailList = this.props.expenses
         this.state.indivisualExpense = expenseDetailList.filter((list) => {
             return list.name2 === name2 && list.paidStatus !== 'Paid' 
@@ -86,7 +86,8 @@ class ExpenseList extends React.Component {
                                 summaryFrom: false,
                                 summaryTo: false,
                                 indExpense: true,
-                                indToExpense: false }))
+                                indToExpense: false,
+                                indivisualFromAmount: indfromAmount }))
     }
     onClickToDetailList = (name1, indToAmount) => {
         const expenseDetailList = this.props.expenses
@@ -144,7 +145,7 @@ class ExpenseList extends React.Component {
                                 { 
                                   this.state.toExpenses.map(item=> (
                                     <tr key={this.state.fromExpenses.id}>
-                                        <td className='content_url' onClick={() => this.onClickDetailList(item.name2, item.amount)}>{item.name2}</td>
+                                        <td className='content_url' onClick={() => this.onClickDetailList(item.name2,item.amount)}>{item.name2}</td>
                                         <td>{item.amount}</td>
                                     </tr>
                                   ))
