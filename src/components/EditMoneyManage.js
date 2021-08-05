@@ -1,20 +1,36 @@
 import React from 'react';
 import ExpenseForm from './ExpenseForm';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import Header from './Header_R';
-import { startEditExpense } from '../actions/expenses';
-import { startDeleteExpense } from '../actions/expenses';
+import { startEditExpense, startDeleteExpense } from '../actions/expenses';
 
 export class EditMoneyManage extends React.Component {
 
     onSubmit = (expense) => {
-        this.props.startEditExpense(this.props.expense.id, expense);
-        this.props.history.push('/');
+        this.props.startEditExpense(this.props.expense.id, expense)
+        
+        axios
+            .post(`${process.env.API_URL}/sendEmail/edit`, expense)
+            .then((response) => {
+                this.props.history.push('/')
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     onDelete = (deleteYes) => {
         if (deleteYes) {
             this.props.startDeleteExpense({ id: this.props.expense.id })
+            axios
+            .post(`${process.env.API_URL}/sendEmail/delete`, this.props.expense)
+            .then((response) => {
+                console.log('response: ', response)
+            })
+            .catch(err => {
+                console.log(err)
+            })
             this.props.history.push('/');
         }
     }

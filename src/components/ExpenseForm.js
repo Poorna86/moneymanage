@@ -22,6 +22,7 @@ class ExpenseForm extends React.Component {
             paidDate: props.expense && props.expense.paidDate ? props.expense.paidDate : moment(),
             createdAt: props.expense ? props.expense.createdAt : moment(),
             paidStatus: props.expense ? props.expense.paidStatus : '',
+            loginEmail: props.expense ? props.expense.loginEmail : props.loginEmail,
             error: '',
             partialExpense: props.expense && props.expense.partialExpense ? props.expense.partialExpense : [],
             calendarFocused: false,
@@ -36,32 +37,37 @@ class ExpenseForm extends React.Component {
     };
 
     componentDidMount = () => {
-      this.calculateIntereset()  
+      this.calculateIntereset()
+      console.log('loginEmail: ', this.state.loginEmail)
     }
 
     calculateIntereset = () => {
       
       if (this.props.expense) {
+        
         if (this.props.expense.interest) {
-  
+          
           if(this.props.expense.partialExpense) {
+            
             if (this.props.expense.partialExpense.length > 0) {
-
+              
               let length = this.props.expense.partialExpense.length - 1
               let partialExpenseArray = this.props.expense.partialExpense
               
               for (let i = (length) ; i <= length; i++) {
                 
-                if(partialExpenseArray[i].indexId === 1) {
-                  this.calculateSimpleIntereset()
-                } else {
+                // if(partialExpenseArray[i].indexId === 1) {
+                //   console.log('calculate simple interest')
+                //   this.calculateSimpleIntereset()
+                // } else {
                   
                   let displayInterest = 
                         (partialExpenseArray[i].balance *
                           ((moment().diff(moment(partialExpenseArray[i].updateDate), 'months', true))/12/1)*
-                          (this.props.expense.interest*12/100)).toFixed(0)  
+                          (this.props.expense.interest*12/100)).toFixed(0) 
+                  
                   this.setState({displayInterest})
-                }
+                // }
               }
             } else {
               this.calculateSimpleIntereset()
@@ -77,7 +83,7 @@ class ExpenseForm extends React.Component {
       const interestAmount = (this.props.expense.amount *
         ((moment().diff(moment(this.props.expense.createdAt), 'months', true))/12/1)*
         (this.props.expense.interest*12/100)).toFixed(0)
-
+        
       this.setState({displayInterest: interestAmount})
     }
 
@@ -341,7 +347,8 @@ class ExpenseForm extends React.Component {
           createdAt: this.state.createdAt.valueOf(),
           paidStatus: this.state.paidStatus,
           paidDate: this.state.paidStatus === 'Paid' ? this.state.paidDate.valueOf() : '',
-          partialExpense: this.state.partialExpense
+          partialExpense: this.state.partialExpense,
+          loginEmail: this.state.loginEmail
         } )
       }
     };
@@ -595,8 +602,14 @@ class ExpenseForm extends React.Component {
     };    
 };
 
+const mapStateToProps = (state) => {
+  return {
+    loginEmail: state.auth.loginEmail
+  }
+}
+
 const mapDispatchToProps = (dispatch) => ({
   startDeleteExpense: (id) => dispatch(startDeleteExpense(id))
 })
 
-export default connect(undefined, mapDispatchToProps) (ExpenseForm)
+export default connect(mapStateToProps, mapDispatchToProps) (ExpenseForm)
