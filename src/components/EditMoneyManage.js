@@ -13,6 +13,7 @@ export class EditMoneyManage extends React.Component {
         axios
             .post(`${process.env.API_URL}/sendEmail/edit`, expense)
             .then((response) => {
+                console.log('response: ', response)
                 this.props.history.push('/')
             })
             .catch(err => {
