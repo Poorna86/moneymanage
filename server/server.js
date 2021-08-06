@@ -27,7 +27,7 @@ app.post('/sendEmail/edit', (req, res) => {
     const edit = 'Edited'
     console.log('req.body.loginEmail: ', req.body.loginEmail)
     sendEmailReport(req.body.loginEmail, req.body.name1, req.body.name2, req.body.amount, req.body.description, edit)
-    res.status(201).send('sucess')
+    res.status(201).send({data: 'sucess'})
 })
 
 app.post('/sendEmail/delete', (req, res) => {
