@@ -16,7 +16,7 @@ export class EditMoneyManage extends React.Component {
         const emailForExitExpense = async () => {
             try {
                 const resp = await axios.post(`${process.env.API_URL}/sendEmail/edit`, expenseData)
-                console.log('response: ', response)
+                console.log('response: ', resp)
                 this.props.history.push('/')
             } catch (err) {
                 console.log(err)
