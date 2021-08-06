@@ -34,6 +34,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.5.3",
+    "cookie-parser": "^1.4.5",
     "css-loader": "^4.3.0",
     "env-cmd": "8.0.2",
     "express": "^4.17.1",
