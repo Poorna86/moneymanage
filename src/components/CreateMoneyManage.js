@@ -12,11 +12,12 @@ class AddExpenses extends React.Component{
         axios
             .post(`${process.env.API_URL}/sendEmail/add`, expense)
             .then((response) => {
-                this.props.history.push('/')
+                console.log('response: ', response)
             })
             .catch(err => {
                 console.log(err)
             })
+            this.props.history.push('/')
     }
     render() {
         return (

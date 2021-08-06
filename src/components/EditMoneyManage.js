@@ -9,35 +9,30 @@ export class EditMoneyManage extends React.Component {
 
     onSubmit = (expense) => {
         this.props.startEditExpense(this.props.expense.id, expense)
-        const expenseData = {
-            expense: expense
-        }
-
-        const emailForExitExpense = async () => {
-            try {
-                const resp = await axios.post(`${process.env.API_URL}/sendEmail/edit`, expenseData)
-                console.log('response: ', resp)
-                this.props.history.push('/')
-            } catch (err) {
+        
+        axios
+            .post(`${process.env.API_URL}/sendEmail/edit`, expense)
+            .then((response) => {
+                console.log('response: ', response)
+            })
+            .catch(err => {
                 console.log(err)
-            }
-        }
-        emailForExitExpense()
+            })
+            this.props.history.push('/')
     }
 
     onDelete = (deleteYes) => {
         if (deleteYes) {
             this.props.startDeleteExpense({ id: this.props.expense.id })
-            const callExpenseEdit = axios
+            axios
             .post(`${process.env.API_URL}/sendEmail/delete`, this.props.expense)
             .then((response) => {
                 console.log('response: ', response)
-                this.props.history.push('/')
             })
             .catch(err => {
                 console.log(err)
             })
-            callExpenseEdit()
+            this.props.history.push('/');
         }
     }
 
