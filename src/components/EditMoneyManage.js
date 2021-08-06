@@ -9,9 +9,14 @@ export class EditMoneyManage extends React.Component {
 
     onSubmit = (expense) => {
         this.props.startEditExpense(this.props.expense.id, expense)
-    
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+          };
         axios
-            .post(`${process.env.API_URL}/sendEmail/edit`, expense)
+            .post(`${process.env.API_URL}/sendEmail/edit`, expense, axiosConfig)
             .then((response) => {
                 console.log('response: ', response)
                 this.props.history.push('/')
