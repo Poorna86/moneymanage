@@ -38,7 +38,6 @@ class ExpenseForm extends React.Component {
 
     componentDidMount = () => {
       this.calculateIntereset()
-      console.log('loginEmail: ', this.state.loginEmail)
     }
 
     calculateIntereset = () => {
