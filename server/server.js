@@ -1,17 +1,18 @@
-const express = require('express')
-const path = require('path')
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const path = require('path');
 const { sendEmailReport } = require('./sendEmail/sendEmail')
-const app = express();
+
+// middleware
+const app = express()
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
+
 const publicPath = path.join(__dirname, '..' , 'public')
 const port = process.env.PORT
 
-
-
-app.use(express.static(publicPath));
-
-// middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.static(publicPath))
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicPath, 'index.html'))
