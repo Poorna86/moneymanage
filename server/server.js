@@ -25,7 +25,7 @@ app.post('/sendEmail/edit', (req, res) => {
     try{
         const edit = 'Edited'
         sendEmailReport(req.body.data.loginEmail, req.body.data.name1, req.body.data.name2, req.body.data.amount, req.body.data.description, edit)
-        res.status(201).send()
+        res.status(201)
     } catch (err) {
         console.log(err)
     }
