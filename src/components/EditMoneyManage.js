@@ -9,14 +9,27 @@ export class EditMoneyManage extends React.Component {
 
     onSubmit = (expense) => {
         this.props.startEditExpense(this.props.expense.id, expense)
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
+        const expenseData = {
+            expense: expense
+        }
+
+        const emailForExitExpense = async () => {
+            try {
+                const resp = await axios.post(`${process.env.API_URL}/sendEmail/edit`, expenseData)
+                console.log('response: ', response)
+                this.props.history.push('/')
+            } catch (err) {
+                console.log(err)
             }
-          };
-        axios
-            .post(`${process.env.API_URL}/sendEmail/edit`, expense, axiosConfig)
+        }
+        emailForExitExpense()
+    }
+
+    onDelete = (deleteYes) => {
+        if (deleteYes) {
+            this.props.startDeleteExpense({ id: this.props.expense.id })
+            const callExpenseEdit = axios
+            .post(`${process.env.API_URL}/sendEmail/delete`, this.props.expense)
             .then((response) => {
                 console.log('response: ', response)
                 this.props.history.push('/')
@@ -24,20 +37,7 @@ export class EditMoneyManage extends React.Component {
             .catch(err => {
                 console.log(err)
             })
-    }
-
-    onDelete = (deleteYes) => {
-        if (deleteYes) {
-            this.props.startDeleteExpense({ id: this.props.expense.id })
-            axios
-            .post(`${process.env.API_URL}/sendEmail/delete`, this.props.expense)
-            .then((response) => {
-                console.log('response: ', response)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-            this.props.history.push('/');
+            callExpenseEdit()
         }
     }
 
