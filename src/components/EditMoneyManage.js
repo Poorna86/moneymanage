@@ -9,7 +9,7 @@ export class EditMoneyManage extends React.Component {
 
     onSubmit = (expense) => {
         this.props.startEditExpense(this.props.expense.id, expense)
-        
+        console.log('process.env.API_URL: ', process.env.API_URL)
         axios
             .post(`${process.env.API_URL}/sendEmail/edit`, expense)
             .then((response) => {

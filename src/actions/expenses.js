@@ -62,9 +62,10 @@ export const startDeleteExpense = ( { id } = {} ) => {
   }
 
 //SET_EXPENSE
-export const setExpense = (expenses) => ({
+export const setExpense = (expenses, categories) => ({
     type: 'SET_EXPENSES',
-    expenses
+    expenses,
+    categories
 });
 
 export const startSetExpenses = (() => {
@@ -81,6 +82,7 @@ export const startSetExpenses = (() => {
                     ...childSnapshot.val()
                 })
             })
+            
             dispatch(setExpense(expenses))
         })
     }
