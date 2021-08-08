@@ -1,15 +1,19 @@
 const express = require('express')
 const path = require('path')
+require('./db/mongoose')
 const { sendEmailReport } = require('./sendEmail/sendEmail')
-const app = express();
+const errorLogRouter = require('./router/errorLoggingRouter')
+
+const app = express()
 const publicPath = path.join(__dirname, '..' , 'public')
 const port = process.env.PORT
 
-app.use(express.static(publicPath));
-
 // middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+app.use(express.static(publicPath))
+app.use(errorLogRouter)
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicPath, 'index.html'))
@@ -19,17 +23,6 @@ app.post('/sendEmail/add', (req, res) => {
     const add = 'added'
     sendEmailReport(req.body.loginEmail,req.body.name1,req.body.name2,req.body.amount, req.body.description, add)
     res.status(201)
-})
-
-app.post('/sendEmail/edit', (req, res) => {
-    try{
-        const edit = 'Edited'
-        sendEmailReport(req.body.loginEmail, req.body.name1, req.body.name2, req.body.amount, req.body.description, edit)
-        res.status(201).send()
-    } catch (err) {
-        console.log(err)
-    }
-
 })
 
 app.post('/sendEmail/delete', (req, res) => {
