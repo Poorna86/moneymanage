@@ -5,6 +5,7 @@ console.log('sendgridAPIKey: ', sendgridAPIKey)
 sgMail.setApiKey(sendgridAPIKey)
 
 const sendEmailReport = (loginEmail, fromName, toName, amount, description, action) => {
+    console.log(loginEmail, fromName, toName, amount, description, action)
         sgMail.send({
             to: loginEmail,
             from: 'bobachandra@gmail.com',
