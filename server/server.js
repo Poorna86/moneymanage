@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 require('./db/mongoose')
 const { sendEmailReport } = require('./sendEmail/sendEmail')
-const errorLogRouter = require('./router/errorLoggingRouter')
+const errorLogsRouter = require('./router/errorLoggingRouter')
 
 const app = express()
 const publicPath = path.join(__dirname, '..' , 'public')
@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use(express.static(publicPath))
-app.use(errorLogRouter)
+app.use(errorLogsRouter)
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicPath, 'index.html'))
