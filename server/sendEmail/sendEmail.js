@@ -5,8 +5,6 @@ const sendgridAPIKey = process.env.SENDGRID_API_KEY
 sgMail.setApiKey(sendgridAPIKey)
 
 const sendEmailReport = (loginEmail, fromName, toName, amount, description, action) => {
-    
-    try {
         sgMail.send({
             to: loginEmail,
             from: 'bobachandra@gmail.com',
@@ -33,10 +31,7 @@ const sendEmailReport = (loginEmail, fromName, toName, amount, description, acti
                     <br></br>
                         <span>Thanks & Regards</span><br></br>
                         <span>Money Management Team</span>`
-        })
-    } catch (error) {
-        console.log(error)
-    }    
+    })
 }
 
 module.exports={
