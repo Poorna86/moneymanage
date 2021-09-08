@@ -22,7 +22,7 @@ class ExpenseForm extends React.Component {
             paidDate: props.expense && props.expense.paidDate ? props.expense.paidDate : moment(),
             createdAt: props.expense ? props.expense.createdAt : moment(),
             paidStatus: props.expense ? props.expense.paidStatus : '',
-            loginEmail: props.expense ? props.expense.loginEmail : props.loginEmail,
+            loginEmail: props.expense ? props.expense.loginEmail ? props.expense.loginEmail : props.loginEmail : props.loginEmail,
             error: '',
             partialExpense: props.expense && props.expense.partialExpense ? props.expense.partialExpense : [],
             calendarFocused: false,

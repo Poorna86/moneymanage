@@ -1,9 +1,6 @@
 {
   "name": "expensify",
   "version": "1.0.0",
-  "engines": {
-    "node": "12.16.2"
-  },
   "main": "index.js",
   "author": "Poorna",
   "license": "MIT",
